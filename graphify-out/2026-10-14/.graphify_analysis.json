@@ -1,0 +1,648 @@
+{
+  "communities": {
+    "0": [
+      "app_services_psicometria_estrategias_combinacion_combinacion",
+      "app_services_psicometria_estrategias_combinacion_combinacion_construct",
+      "app_services_psicometria_estrategias_dimensionmayor_dimensionmayor",
+      "app_services_psicometria_estrategias_estrategiaresultado_estrategiaresultado",
+      "app_services_psicometria_estrategias_puntajepordimension_puntajepordimension",
+      "app_services_psicometria_estrategias_totalcorrectas_totalcorrectas",
+      "app_services_psicometria_motorpsicometrico",
+      "app_services_psicometria_motorpsicometrico_closure_1",
+      "app_services_psicometria_motorpsicometrico_closure_2",
+      "app_services_psicometria_motorpsicometrico_closure_3",
+      "app_services_psicometria_motorpsicometrico_closure_4",
+      "app_services_psicometria_motorpsicometrico_closure_5",
+      "app_services_psicometria_motorpsicometrico_motorpsicometrico_estrategiapara",
+      "database_tests_unit_psicometria_estrategiasresultadotest",
+      "database_tests_unit_psicometria_estrategiasresultadotest_estrategiasresultadotest",
+      "database_tests_unit_psicometria_estrategiasresultadotest_estrategiasresultadotest_dim",
+      "database_tests_unit_psicometria_estrategiasresultadotest_estrategiasresultadotest_perfiles",
+      "database_tests_unit_psicometria_estrategiasresultadotest_estrategiasresultadotest_test_combinacion_detecta_empate_en_el_limite",
+      "database_tests_unit_psicometria_estrategiasresultadotest_estrategiasresultadotest_test_combinacion_forma_el_codigo_con_las_dos_mas_altas",
+      "database_tests_unit_psicometria_estrategiasresultadotest_estrategiasresultadotest_test_dimension_mayor_elige_la_de_mayor_puntaje",
+      "database_tests_unit_psicometria_estrategiasresultadotest_estrategiasresultadotest_test_dimension_mayor_reporta_empate_en_lugar_de_elegir",
+      "database_tests_unit_psicometria_estrategiasresultadotest_estrategiasresultadotest_test_dimension_sin_rango_no_se_oculta",
+      "database_tests_unit_psicometria_estrategiasresultadotest_estrategiasresultadotest_test_porcentaje_y_maximo_nulo",
+      "database_tests_unit_psicometria_estrategiasresultadotest_estrategiasresultadotest_test_rangos_incluyen_los_bordes",
+      "database_tests_unit_psicometria_estrategiasresultadotest_estrategiasresultadotest_test_total_correctas_suma_todas_las_dimensiones",
+      "illuminate_support_facades_db",
+      "phpunit_framework_testcase",
+      "public_app_services_psicometria_motorpsicometrico",
+      "public_app_services_psicometria_motorpsicometrico_closure_1",
+      "public_app_services_psicometria_motorpsicometrico_closure_2",
+      "public_app_services_psicometria_motorpsicometrico_closure_3",
+      "public_app_services_psicometria_motorpsicometrico_closure_4",
+      "public_app_services_psicometria_motorpsicometrico_closure_5",
+      "public_app_services_psicometria_motorpsicometrico_closure_6",
+      "public_app_services_psicometria_motorpsicometrico_motorpsicometrico_estrategiapara",
+      "tests_unit_exampletest",
+      "tests_unit_exampletest_exampletest",
+      "tests_unit_exampletest_exampletest_test_that_true_is_true",
+      "tests_unit_psicometria_estrategiasresultadotest",
+      "tests_unit_psicometria_estrategiasresultadotest_estrategiasresultadotest",
+      "tests_unit_psicometria_estrategiasresultadotest_estrategiasresultadotest_dim",
+      "tests_unit_psicometria_estrategiasresultadotest_estrategiasresultadotest_perfiles",
+      "tests_unit_psicometria_estrategiasresultadotest_estrategiasresultadotest_test_combinacion_detecta_empate_en_el_limite",
+      "tests_unit_psicometria_estrategiasresultadotest_estrategiasresultadotest_test_combinacion_forma_el_codigo_con_las_dos_mas_altas",
+      "tests_unit_psicometria_estrategiasresultadotest_estrategiasresultadotest_test_dimension_mayor_elige_la_de_mayor_puntaje",
+      "tests_unit_psicometria_estrategiasresultadotest_estrategiasresultadotest_test_dimension_mayor_reporta_empate_en_lugar_de_elegir",
+      "tests_unit_psicometria_estrategiasresultadotest_estrategiasresultadotest_test_dimension_sin_rango_no_se_oculta",
+      "tests_unit_psicometria_estrategiasresultadotest_estrategiasresultadotest_test_porcentaje_y_maximo_nulo",
+      "tests_unit_psicometria_estrategiasresultadotest_estrategiasresultadotest_test_rangos_incluyen_los_bordes",
+      "tests_unit_psicometria_estrategiasresultadotest_estrategiasresultadotest_test_total_correctas_suma_todas_las_dimensiones"
+    ],
+    "1": [
+      "composer",
+      "composer_allow_plugins_pestphp_pest_plugin",
+      "composer_allow_plugins_php_http_discovery",
+      "composer_autoload",
+      "composer_autoload_dev",
+      "composer_autoload_dev_psr_4",
+      "composer_autoload_psr_4",
+      "composer_config",
+      "composer_config_allow_plugins",
+      "composer_config_optimize_autoloader",
+      "composer_config_preferred_install",
+      "composer_config_sort_packages",
+      "composer_description",
+      "composer_extra",
+      "composer_extra_laravel",
+      "composer_keywords",
+      "composer_laravel_dont_discover",
+      "composer_license",
+      "composer_minimum_stability",
+      "composer_name",
+      "composer_prefer_stable",
+      "composer_psr_4_app",
+      "composer_psr_4_database_factories",
+      "composer_psr_4_database_seeders",
+      "composer_psr_4_tests",
+      "composer_require",
+      "composer_require_dev",
+      "composer_require_dev_fakerphp_faker",
+      "composer_require_dev_laravel_pail",
+      "composer_require_dev_laravel_pint",
+      "composer_require_dev_laravel_sail",
+      "composer_require_dev_mockery_mockery",
+      "composer_require_dev_nunomaduro_collision",
+      "composer_require_dev_phpunit_phpunit",
+      "composer_require_laravel_framework",
+      "composer_require_laravel_tinker",
+      "composer_require_php",
+      "composer_schema",
+      "composer_scripts",
+      "composer_scripts_dev",
+      "composer_scripts_post_autoload_dump",
+      "composer_scripts_post_create_project_cmd",
+      "composer_scripts_post_root_package_install",
+      "composer_scripts_post_update_cmd",
+      "composer_scripts_pre_package_uninstall",
+      "composer_scripts_setup",
+      "composer_scripts_test",
+      "composer_type"
+    ],
+    "2": [
+      "app_models_user",
+      "app_models_user_user",
+      "app_models_user_user_casts",
+      "config_auth",
+      "config_cache",
+      "config_database",
+      "config_session",
+      "database_factories_userfactory",
+      "database_factories_userfactory_closure_1",
+      "database_factories_userfactory_userfactory",
+      "database_factories_userfactory_userfactory_definition",
+      "database_factories_userfactory_userfactory_unverified",
+      "database_seeders_databaseseeder",
+      "database_seeders_databaseseeder_databaseseeder",
+      "database_seeders_databaseseeder_databaseseeder_run",
+      "illuminate_database_console_seeds_withoutmodelevents",
+      "illuminate_database_eloquent_factories_factory",
+      "illuminate_database_eloquent_factories_hasfactory",
+      "illuminate_database_seeder",
+      "illuminate_foundation_auth_user",
+      "illuminate_notifications_notifiable",
+      "illuminate_support_facades_hash",
+      "illuminate_support_str",
+      "pdo_mysql",
+      "static"
+    ],
+    "3": [
+      "package",
+      "package_devdependencies",
+      "package_devdependencies_axios",
+      "package_devdependencies_concurrently",
+      "package_devdependencies_laravel_vite_plugin",
+      "package_devdependencies_tailwindcss",
+      "package_devdependencies_tailwindcss_vite",
+      "package_devdependencies_vite",
+      "package_private",
+      "package_schema",
+      "package_scripts",
+      "package_scripts_build",
+      "package_scripts_dev",
+      "package_type",
+      "ref_axios",
+      "ref_concurrently",
+      "ref_laravel_vite_plugin",
+      "ref_tailwindcss",
+      "ref_tailwindcss_vite",
+      "ref_vite",
+      "resources_js_app",
+      "resources_js_bootstrap",
+      "vite_config"
+    ],
+    "4": [
+      "app_services_psicometria_estrategias_estrategiaresultado",
+      "app_services_psicometria_estrategias_utilesestrategia",
+      "app_services_psicometria_estrategias_utilesestrategia_closure_1",
+      "app_services_psicometria_motorpsicometrico_closure_6",
+      "app_services_psicometria_resultadodimension",
+      "app_services_psicometria_resultadodimension_resultadodimension",
+      "app_services_psicometria_resultadodimension_resultadodimension_construct",
+      "app_services_psicometria_resultadodimension_resultadodimension_porcentaje",
+      "domainexception",
+      "public_app_services_psicometria_estrategias_utilesestrategia",
+      "public_app_services_psicometria_estrategias_utilesestrategia_closure_1",
+      "public_app_services_psicometria_estrategias_utilesestrategia_utilesestrategia",
+      "public_app_services_psicometria_estrategias_utilesestrategia_utilesestrategia_buscarrango",
+      "public_app_services_psicometria_estrategias_utilesestrategia_utilesestrategia_iguales",
+      "public_app_services_psicometria_estrategias_utilesestrategia_utilesestrategia_ordenarporpuntaje"
+    ],
+    "5": [
+      "app_services_psicometria_estrategias_combinacion_combinacion_interpretar",
+      "app_services_psicometria_estrategias_dimensionmayor_dimensionmayor_interpretar",
+      "app_services_psicometria_estrategias_estrategiaresultado_estrategiaresultado_interpretar",
+      "app_services_psicometria_estrategias_puntajepordimension",
+      "app_services_psicometria_estrategias_puntajepordimension_puntajepordimension_interpretar",
+      "app_services_psicometria_estrategias_totalcorrectas",
+      "app_services_psicometria_estrategias_totalcorrectas_closure_1",
+      "app_services_psicometria_estrategias_totalcorrectas_totalcorrectas_interpretar",
+      "app_services_psicometria_resultadofinal",
+      "app_services_psicometria_resultadofinal_resultadofinal",
+      "app_services_psicometria_resultadofinal_resultadofinal_construct",
+      "public_app_services_psicometria_estrategias_estrategiaresultado",
+      "public_app_services_psicometria_estrategias_estrategiaresultado_estrategiaresultado",
+      "public_app_services_psicometria_estrategias_estrategiaresultado_estrategiaresultado_interpretar"
+    ],
+    "6": [
+      "database_database_migrations_2026_10_09_000003_create_preguntas_table",
+      "database_database_migrations_2026_10_09_000003_create_preguntas_table_closure_1",
+      "database_database_migrations_2026_10_09_000003_create_preguntas_table_down",
+      "database_database_migrations_2026_10_09_000003_create_preguntas_table_up",
+      "database_database_migrations_2026_10_09_000011_create_resultados_prueba_table",
+      "database_database_migrations_2026_10_09_000011_create_resultados_prueba_table_closure_1",
+      "database_database_migrations_2026_10_09_000011_create_resultados_prueba_table_down",
+      "database_database_migrations_2026_10_09_000011_create_resultados_prueba_table_up",
+      "database_migrations_2026_10_09_000010_create_resultados_dimension_table",
+      "database_migrations_2026_10_09_000010_create_resultados_dimension_table_closure_1",
+      "database_migrations_2026_10_09_000010_create_resultados_dimension_table_down",
+      "database_migrations_2026_10_09_000010_create_resultados_dimension_table_up",
+      "illuminate_database_migrations_migration"
+    ],
+    "7": [
+      "database_migrations_0001_01_01_000000_create_users_table",
+      "database_migrations_0001_01_01_000000_create_users_table_closure_1",
+      "database_migrations_0001_01_01_000000_create_users_table_closure_2",
+      "database_migrations_0001_01_01_000000_create_users_table_closure_3",
+      "database_migrations_0001_01_01_000000_create_users_table_down",
+      "database_migrations_0001_01_01_000000_create_users_table_up",
+      "database_migrations_0001_01_01_000002_create_jobs_table",
+      "database_migrations_0001_01_01_000002_create_jobs_table_closure_1",
+      "database_migrations_0001_01_01_000002_create_jobs_table_closure_2",
+      "database_migrations_0001_01_01_000002_create_jobs_table_closure_3",
+      "database_migrations_0001_01_01_000002_create_jobs_table_down",
+      "database_migrations_0001_01_01_000002_create_jobs_table_up",
+      "illuminate_database_schema_blueprint"
+    ],
+    "8": [
+      "app_services_psicometria_estrategias_utilesestrategia_utilesestrategia",
+      "app_services_psicometria_estrategias_utilesestrategia_utilesestrategia_buscarrango",
+      "app_services_psicometria_estrategias_utilesestrategia_utilesestrategia_iguales",
+      "app_services_psicometria_estrategias_utilesestrategia_utilesestrategia_ordenarporpuntaje",
+      "public_app_services_psicometria_estrategias_puntajepordimension",
+      "public_app_services_psicometria_estrategias_puntajepordimension_puntajepordimension",
+      "public_app_services_psicometria_estrategias_puntajepordimension_puntajepordimension_interpretar",
+      "public_app_services_psicometria_estrategias_totalcorrectas",
+      "public_app_services_psicometria_estrategias_totalcorrectas_closure_1",
+      "public_app_services_psicometria_estrategias_totalcorrectas_totalcorrectas",
+      "public_app_services_psicometria_estrategias_totalcorrectas_totalcorrectas_interpretar"
+    ],
+    "9": [
+      "database_migrations_2026_10_09_000001_create_pruebas_table",
+      "database_migrations_2026_10_09_000001_create_pruebas_table_closure_1",
+      "database_migrations_2026_10_09_000001_create_pruebas_table_down",
+      "database_migrations_2026_10_09_000001_create_pruebas_table_up",
+      "database_migrations_2026_10_09_000009_create_respuestas_table",
+      "database_migrations_2026_10_09_000009_create_respuestas_table_closure_1",
+      "database_migrations_2026_10_09_000009_create_respuestas_table_down",
+      "database_migrations_2026_10_09_000009_create_respuestas_table_up",
+      "illuminate_support_facades_schema"
+    ],
+    "10": [
+      "bootstrap_app",
+      "bootstrap_app_closure_1",
+      "bootstrap_app_closure_2",
+      "illuminate_foundation_application",
+      "illuminate_foundation_configuration_exceptions",
+      "illuminate_foundation_configuration_middleware",
+      "illuminate_http_request",
+      "public_index"
+    ],
+    "11": [
+      "public_app_services_psicometria_estrategias_combinacion",
+      "public_app_services_psicometria_estrategias_combinacion_closure_1",
+      "public_app_services_psicometria_estrategias_combinacion_closure_2",
+      "public_app_services_psicometria_estrategias_combinacion_closure_3",
+      "public_app_services_psicometria_estrategias_combinacion_closure_4",
+      "public_app_services_psicometria_estrategias_combinacion_combinacion",
+      "public_app_services_psicometria_estrategias_combinacion_combinacion_construct",
+      "public_app_services_psicometria_estrategias_combinacion_combinacion_interpretar"
+    ],
+    "12": [
+      "app_providers_appserviceprovider",
+      "app_providers_appserviceprovider_appserviceprovider",
+      "app_providers_appserviceprovider_appserviceprovider_boot",
+      "app_providers_appserviceprovider_appserviceprovider_register",
+      "bootstrap_providers",
+      "illuminate_support_serviceprovider"
+    ],
+    "13": [
+      "illuminate_foundation_testing_testcase",
+      "tests_feature_exampletest",
+      "tests_feature_exampletest_exampletest",
+      "tests_feature_exampletest_exampletest_test_the_application_returns_a_successful_response",
+      "tests_testcase",
+      "tests_testcase_testcase"
+    ],
+    "14": [
+      "app_services_psicometria_estrategias_combinacion",
+      "app_services_psicometria_estrategias_combinacion_closure_1",
+      "app_services_psicometria_estrategias_combinacion_closure_2",
+      "app_services_psicometria_estrategias_combinacion_closure_3",
+      "app_services_psicometria_estrategias_combinacion_closure_4"
+    ],
+    "15": [
+      "app_services_psicometria_motorpsicometrico_motorpsicometrico",
+      "app_services_psicometria_motorpsicometrico_motorpsicometrico_calcular",
+      "app_services_psicometria_motorpsicometrico_motorpsicometrico_detalle",
+      "app_services_psicometria_motorpsicometrico_motorpsicometrico_guardar",
+      "app_services_psicometria_motorpsicometrico_motorpsicometrico_validarcompletitud"
+    ],
+    "16": [
+      "config_logging",
+      "monolog_handler_nullhandler",
+      "monolog_handler_streamhandler",
+      "monolog_handler_syslogudphandler",
+      "monolog_processor_psrlogmessageprocessor"
+    ],
+    "17": [
+      "database_database_migrations_2026_10_20_000000_agregar_fk_postulacion_a_asignaciones_prueba_pendiente",
+      "database_database_migrations_2026_10_20_000000_agregar_fk_postulacion_a_asignaciones_prueba_pendiente_closure_1",
+      "database_database_migrations_2026_10_20_000000_agregar_fk_postulacion_a_asignaciones_prueba_pendiente_closure_2",
+      "database_database_migrations_2026_10_20_000000_agregar_fk_postulacion_a_asignaciones_prueba_pendiente_down",
+      "database_database_migrations_2026_10_20_000000_agregar_fk_postulacion_a_asignaciones_prueba_pendiente_up"
+    ],
+    "18": [
+      "database_migrations_0001_01_01_000001_create_cache_table",
+      "database_migrations_0001_01_01_000001_create_cache_table_closure_1",
+      "database_migrations_0001_01_01_000001_create_cache_table_closure_2",
+      "database_migrations_0001_01_01_000001_create_cache_table_down",
+      "database_migrations_0001_01_01_000001_create_cache_table_up"
+    ],
+    "19": [
+      "public_app_services_psicometria_estrategias_dimensionmayor",
+      "public_app_services_psicometria_estrategias_dimensionmayor_closure_1",
+      "public_app_services_psicometria_estrategias_dimensionmayor_closure_2",
+      "public_app_services_psicometria_estrategias_dimensionmayor_dimensionmayor",
+      "public_app_services_psicometria_estrategias_dimensionmayor_dimensionmayor_interpretar"
+    ],
+    "20": [
+      "public_app_services_psicometria_motorpsicometrico_motorpsicometrico",
+      "public_app_services_psicometria_motorpsicometrico_motorpsicometrico_calcular",
+      "public_app_services_psicometria_motorpsicometrico_motorpsicometrico_detalle",
+      "public_app_services_psicometria_motorpsicometrico_motorpsicometrico_guardar",
+      "public_app_services_psicometria_motorpsicometrico_motorpsicometrico_validarcompletitud"
+    ],
+    "21": [
+      "database_database_migrations_2026_10_09_000001_create_pruebas_table",
+      "database_database_migrations_2026_10_09_000001_create_pruebas_table_closure_1",
+      "database_database_migrations_2026_10_09_000001_create_pruebas_table_down",
+      "database_database_migrations_2026_10_09_000001_create_pruebas_table_up"
+    ],
+    "22": [
+      "database_database_migrations_2026_10_09_000002_create_dimensiones_table",
+      "database_database_migrations_2026_10_09_000002_create_dimensiones_table_closure_1",
+      "database_database_migrations_2026_10_09_000002_create_dimensiones_table_down",
+      "database_database_migrations_2026_10_09_000002_create_dimensiones_table_up"
+    ],
+    "23": [
+      "database_database_migrations_2026_10_09_000004_create_opciones_table",
+      "database_database_migrations_2026_10_09_000004_create_opciones_table_closure_1",
+      "database_database_migrations_2026_10_09_000004_create_opciones_table_down",
+      "database_database_migrations_2026_10_09_000004_create_opciones_table_up"
+    ],
+    "24": [
+      "database_database_migrations_2026_10_09_000005_create_opcion_dimension_table",
+      "database_database_migrations_2026_10_09_000005_create_opcion_dimension_table_closure_1",
+      "database_database_migrations_2026_10_09_000005_create_opcion_dimension_table_down",
+      "database_database_migrations_2026_10_09_000005_create_opcion_dimension_table_up"
+    ],
+    "25": [
+      "database_database_migrations_2026_10_09_000006_create_perfiles_table",
+      "database_database_migrations_2026_10_09_000006_create_perfiles_table_closure_1",
+      "database_database_migrations_2026_10_09_000006_create_perfiles_table_down",
+      "database_database_migrations_2026_10_09_000006_create_perfiles_table_up"
+    ],
+    "26": [
+      "database_database_migrations_2026_10_09_000007_create_rangos_interpretacion_table",
+      "database_database_migrations_2026_10_09_000007_create_rangos_interpretacion_table_closure_1",
+      "database_database_migrations_2026_10_09_000007_create_rangos_interpretacion_table_down",
+      "database_database_migrations_2026_10_09_000007_create_rangos_interpretacion_table_up"
+    ],
+    "27": [
+      "database_database_migrations_2026_10_09_000008_create_asignaciones_prueba_table",
+      "database_database_migrations_2026_10_09_000008_create_asignaciones_prueba_table_closure_1",
+      "database_database_migrations_2026_10_09_000008_create_asignaciones_prueba_table_down",
+      "database_database_migrations_2026_10_09_000008_create_asignaciones_prueba_table_up"
+    ],
+    "28": [
+      "database_database_migrations_2026_10_09_000009_create_respuestas_table",
+      "database_database_migrations_2026_10_09_000009_create_respuestas_table_closure_1",
+      "database_database_migrations_2026_10_09_000009_create_respuestas_table_down",
+      "database_database_migrations_2026_10_09_000009_create_respuestas_table_up"
+    ],
+    "29": [
+      "database_database_migrations_2026_10_09_000010_create_resultados_dimension_table",
+      "database_database_migrations_2026_10_09_000010_create_resultados_dimension_table_closure_1",
+      "database_database_migrations_2026_10_09_000010_create_resultados_dimension_table_down",
+      "database_database_migrations_2026_10_09_000010_create_resultados_dimension_table_up"
+    ],
+    "30": [
+      "database_migrations_2026_10_09_000002_create_dimensiones_table",
+      "database_migrations_2026_10_09_000002_create_dimensiones_table_closure_1",
+      "database_migrations_2026_10_09_000002_create_dimensiones_table_down",
+      "database_migrations_2026_10_09_000002_create_dimensiones_table_up"
+    ],
+    "31": [
+      "database_migrations_2026_10_09_000003_create_preguntas_table",
+      "database_migrations_2026_10_09_000003_create_preguntas_table_closure_1",
+      "database_migrations_2026_10_09_000003_create_preguntas_table_down",
+      "database_migrations_2026_10_09_000003_create_preguntas_table_up"
+    ],
+    "32": [
+      "database_migrations_2026_10_09_000004_create_opciones_table",
+      "database_migrations_2026_10_09_000004_create_opciones_table_closure_1",
+      "database_migrations_2026_10_09_000004_create_opciones_table_down",
+      "database_migrations_2026_10_09_000004_create_opciones_table_up"
+    ],
+    "33": [
+      "database_migrations_2026_10_09_000005_create_opcion_dimension_table",
+      "database_migrations_2026_10_09_000005_create_opcion_dimension_table_closure_1",
+      "database_migrations_2026_10_09_000005_create_opcion_dimension_table_down",
+      "database_migrations_2026_10_09_000005_create_opcion_dimension_table_up"
+    ],
+    "34": [
+      "database_migrations_2026_10_09_000006_create_perfiles_table",
+      "database_migrations_2026_10_09_000006_create_perfiles_table_closure_1",
+      "database_migrations_2026_10_09_000006_create_perfiles_table_down",
+      "database_migrations_2026_10_09_000006_create_perfiles_table_up"
+    ],
+    "35": [
+      "database_migrations_2026_10_09_000007_create_rangos_interpretacion_table",
+      "database_migrations_2026_10_09_000007_create_rangos_interpretacion_table_closure_1",
+      "database_migrations_2026_10_09_000007_create_rangos_interpretacion_table_down",
+      "database_migrations_2026_10_09_000007_create_rangos_interpretacion_table_up"
+    ],
+    "36": [
+      "database_migrations_2026_10_09_000008_create_asignaciones_prueba_table",
+      "database_migrations_2026_10_09_000008_create_asignaciones_prueba_table_closure_1",
+      "database_migrations_2026_10_09_000008_create_asignaciones_prueba_table_down",
+      "database_migrations_2026_10_09_000008_create_asignaciones_prueba_table_up"
+    ],
+    "37": [
+      "database_migrations_2026_10_09_000011_create_resultados_prueba_table",
+      "database_migrations_2026_10_09_000011_create_resultados_prueba_table_closure_1",
+      "database_migrations_2026_10_09_000011_create_resultados_prueba_table_down",
+      "database_migrations_2026_10_09_000011_create_resultados_prueba_table_up"
+    ],
+    "38": [
+      "illuminate_foundation_inspiring",
+      "illuminate_support_facades_artisan",
+      "routes_console",
+      "routes_console_closure_1"
+    ],
+    "39": [
+      "public_app_services_psicometria_resultadodimension",
+      "public_app_services_psicometria_resultadodimension_resultadodimension",
+      "public_app_services_psicometria_resultadodimension_resultadodimension_construct",
+      "public_app_services_psicometria_resultadodimension_resultadodimension_porcentaje"
+    ],
+    "40": [
+      "app_services_psicometria_estrategias_dimensionmayor",
+      "app_services_psicometria_estrategias_dimensionmayor_closure_1",
+      "app_services_psicometria_estrategias_dimensionmayor_closure_2"
+    ],
+    "41": [
+      "application",
+      "argvinput",
+      "artisan"
+    ],
+    "42": [
+      "illuminate_support_facades_route",
+      "routes_web",
+      "routes_web_get"
+    ],
+    "43": [
+      "public_app_services_psicometria_resultadofinal",
+      "public_app_services_psicometria_resultadofinal_resultadofinal",
+      "public_app_services_psicometria_resultadofinal_resultadofinal_construct"
+    ],
+    "44": [
+      "app_http_controllers_controller",
+      "app_http_controllers_controller_controller"
+    ],
+    "45": [
+      "config_app"
+    ],
+    "46": [
+      "config_filesystems"
+    ],
+    "47": [
+      "config_mail"
+    ],
+    "48": [
+      "config_queue"
+    ],
+    "49": [
+      "config_services"
+    ]
+  },
+  "cohesion": {
+    "0": 0.09306122448979592,
+    "1": 0.041666666666666664,
+    "2": 0.10666666666666667,
+    "3": 0.09486166007905138,
+    "4": 0.1619047619047619,
+    "5": 0.15384615384615385,
+    "6": 0.15384615384615385,
+    "7": 0.23076923076923078,
+    "8": 0.18181818181818182,
+    "9": 0.2222222222222222,
+    "10": 0.32142857142857145,
+    "11": 0.25,
+    "12": 0.4,
+    "13": 0.4666666666666667,
+    "14": 0.4,
+    "15": 0.7,
+    "16": 0.4,
+    "17": 0.4,
+    "18": 0.4,
+    "19": 0.4,
+    "20": 0.7,
+    "21": 0.5,
+    "22": 0.5,
+    "23": 0.5,
+    "24": 0.5,
+    "25": 0.5,
+    "26": 0.5,
+    "27": 0.5,
+    "28": 0.5,
+    "29": 0.5,
+    "30": 0.5,
+    "31": 0.5,
+    "32": 0.5,
+    "33": 0.5,
+    "34": 0.5,
+    "35": 0.5,
+    "36": 0.5,
+    "37": 0.5,
+    "38": 0.5,
+    "39": 0.5,
+    "40": 0.6666666666666666,
+    "41": 0.6666666666666666,
+    "42": 0.6666666666666666,
+    "43": 0.6666666666666666,
+    "44": 1.0,
+    "45": 1.0,
+    "46": 1.0,
+    "47": 1.0,
+    "48": 1.0,
+    "49": 1.0
+  },
+  "gods": [
+    {
+      "id": "app_services_psicometria_resultadofinal_resultadofinal",
+      "label": "ResultadoFinal",
+      "degree": 26
+    },
+    {
+      "id": "app_services_psicometria_estrategias_combinacion_combinacion",
+      "label": "Combinacion",
+      "degree": 15
+    },
+    {
+      "id": "app_services_psicometria_resultadodimension_resultadodimension",
+      "label": "ResultadoDimension",
+      "degree": 15
+    },
+    {
+      "id": "app_services_psicometria_estrategias_dimensionmayor_dimensionmayor",
+      "label": "DimensionMayor",
+      "degree": 14
+    },
+    {
+      "id": "app_services_psicometria_estrategias_estrategiaresultado_estrategiaresultado",
+      "label": "EstrategiaResultado",
+      "degree": 14
+    },
+    {
+      "id": "app_services_psicometria_estrategias_puntajepordimension_puntajepordimension",
+      "label": "PuntajePorDimension",
+      "degree": 14
+    },
+    {
+      "id": "app_services_psicometria_estrategias_totalcorrectas_totalcorrectas",
+      "label": "TotalCorrectas",
+      "degree": 12
+    },
+    {
+      "id": "database_tests_unit_psicometria_estrategiasresultadotest_estrategiasresultadotest",
+      "label": "EstrategiasResultadoTest",
+      "degree": 12
+    },
+    {
+      "id": "tests_unit_psicometria_estrategiasresultadotest_estrategiasresultadotest",
+      "label": "EstrategiasResultadoTest",
+      "degree": 12
+    },
+    {
+      "id": "app_services_psicometria_estrategias_utilesestrategia_utilesestrategia",
+      "label": "UtilesEstrategia",
+      "degree": 12
+    }
+  ],
+  "surprises": [
+    {
+      "source": "{closure#6}()",
+      "target": "ResultadoDimension",
+      "source_files": [
+        "public/app/Services/Psicometria/MotorPsicometrico.php",
+        "app/Services/Psicometria/ResultadoDimension.php"
+      ],
+      "confidence": "EXTRACTED",
+      "relation": "references",
+      "why": "connects across different repos/directories; bridges separate communities; peripheral node `{closure#6}()` unexpectedly reaches hub `ResultadoDimension`"
+    },
+    {
+      "source": "Combinacion",
+      "target": "EstrategiaResultado",
+      "source_files": [
+        "public/app/Services/Psicometria/Estrategias/Combinacion.php",
+        "app/Services/Psicometria/Estrategias/EstrategiaResultado.php"
+      ],
+      "confidence": "EXTRACTED",
+      "relation": "implements",
+      "why": "connects across different repos/directories; bridges separate communities"
+    },
+    {
+      "source": "DimensionMayor",
+      "target": "EstrategiaResultado",
+      "source_files": [
+        "public/app/Services/Psicometria/Estrategias/DimensionMayor.php",
+        "app/Services/Psicometria/Estrategias/EstrategiaResultado.php"
+      ],
+      "confidence": "EXTRACTED",
+      "relation": "implements",
+      "why": "connects across different repos/directories; bridges separate communities"
+    },
+    {
+      "source": "PuntajePorDimension",
+      "target": "EstrategiaResultado",
+      "source_files": [
+        "public/app/Services/Psicometria/Estrategias/PuntajePorDimension.php",
+        "app/Services/Psicometria/Estrategias/EstrategiaResultado.php"
+      ],
+      "confidence": "EXTRACTED",
+      "relation": "implements",
+      "why": "connects across different repos/directories; bridges separate communities"
+    },
+    {
+      "source": "TotalCorrectas",
+      "target": "EstrategiaResultado",
+      "source_files": [
+        "public/app/Services/Psicometria/Estrategias/TotalCorrectas.php",
+        "app/Services/Psicometria/Estrategias/EstrategiaResultado.php"
+      ],
+      "confidence": "EXTRACTED",
+      "relation": "implements",
+      "why": "connects across different repos/directories; bridges separate communities"
+    }
+  ],
+  "tokens": {
+    "input": 0,
+    "output": 0
+  }
+}
