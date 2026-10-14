@@ -7,8 +7,10 @@ use App\Services\Psicometria\Estrategias\DimensionMayor;
 use App\Services\Psicometria\Estrategias\EstrategiaResultado;
 use App\Services\Psicometria\Estrategias\PuntajePorDimension;
 use App\Services\Psicometria\Estrategias\TotalCorrectas;
+use App\Services\Psicometrica\Estrategias\PuntajeT;
 use DomainException;
 use Illuminate\Support\Facades\DB;
+
 
 /**
  * Orquesta: valida -> suma -> interpreta -> guarda (en una transacción).
@@ -33,6 +35,14 @@ final class MotorPsicometrico
         if ($prueba->estado !== 'APROBADA') {
             throw new DomainException('La prueba no está aprobada por Talento Humano.');
         }
+        
+$baremos = DB::table('baremos')
+    ->where('prueba_id', $prueba->id)
+    // ->where('sexo_baremo', $asignacion->sexo) // según cómo manejes el sexo
+    ->get()
+    ->groupBy('dimension_id')
+    ->map(fn($rows) => $rows->pluck('puntaje_t', 'puntaje_directo')->all())
+    ->all();
 
         // El límite de tiempo se controla en el endpoint que RECIBE cada
         // respuesta (servidor), no aquí.
@@ -45,7 +55,7 @@ final class MotorPsicometrico
         $rangos = DB::table('rangos_interpretacion')->where('prueba_id', $prueba->id)->get()
             ->map(fn ($r) => (array) $r)->all();
 
-        $final = $this->estrategiaPara($prueba->metodo_resultado)->interpretar($detalle, $perfiles, $rangos);
+        $final = $this->estrategiaPara($prueba->metodo_resultado)->interpretar($detalle, $perfiles, $rangos, $baremos);
 
         $this->guardar($asignacionId, $detalle, $final);
 
@@ -113,6 +123,7 @@ final class MotorPsicometrico
             'COMBINACION'           => new Combinacion(2),
             'PUNTAJE_POR_DIMENSION' => new PuntajePorDimension(),
             'TOTAL_CORRECTAS'       => new TotalCorrectas(),
+            'PUNTAJE_T'             => new PuntajeT($baremos),
             default => throw new DomainException("Método de resultado desconocido: {$metodo}"),
         };
     }
