@@ -1,17 +1,17 @@
 # Graph Report - robasa-1  (2026-10-15)
 
 ## Corpus Check
-- 106 files · ~37,299 words
+- 107 files · ~37,332 words
 - Verdict: corpus is large enough that graph structure adds value.
 - Unclassified: 20 file(s) not represented in the graph (top: (none) 16, .example 1, .xml 1)
 
 ## Summary
-- 538 nodes · 856 edges · 62 communities (11 shown, 51 thin omitted)
+- 539 nodes · 856 edges · 63 communities (11 shown, 52 thin omitted)
 - Extraction: 100% EXTRACTED · 0% INFERRED · 0% AMBIGUOUS · INFERRED: 4 edges (avg confidence: 0.85)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `61ccd6e6`
+- Built from commit: `23d5132a`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -95,7 +95,7 @@
 ## Import Cycles
 - None detected.
 
-## Communities (62 total, 51 thin omitted)
+## Communities (63 total, 52 thin omitted)
 
 ### Community 0 - "EstrategiaResultado"
 Cohesion: 0.09
@@ -143,8 +143,8 @@ Nodes (3): {closure#1}(), {closure#2}(), {closure#3}()
 
 ## Knowledge Gaps
 - **7 isolated node(s):** `axios`, `concurrently`, `tailwindcss`, `layouts.app`, `layouts.app` (+2 more)
-  These have ≤1 connection - possible missing edges or undocumented components. (Counts symbols only; 226 node(s) total have ≤1 connection when file, concept and rationale nodes are included.)
-- **51 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
+  These have ≤1 connection - possible missing edges or undocumented components. (Counts symbols only; 227 node(s) total have ≤1 connection when file, concept and rationale nodes are included.)
+- **52 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_

@@ -642,9 +642,9 @@
     "semantic_hash": ""
   },
   "public/crear-cuenta.html": {
-    "mtime": 1792100212.856678,
-    "seen": 1792100292.7345927,
-    "ast_hash": "0b8b47c5bce426107c851e0d120a72fa",
+    "mtime": 1792101217.888126,
+    "seen": 1792101231.28505,
+    "ast_hash": "6f2d15eca4754bf999e603c10a22beb2",
     "semantic_hash": ""
   },
   "public/datos-personales.html": {
@@ -660,15 +660,15 @@
     "semantic_hash": ""
   },
   "public/exito.html": {
-    "mtime": 1792100212.9288397,
-    "seen": 1792100292.7345927,
-    "ast_hash": "81e63f8ca38b148e038a51c69e9edf02",
+    "mtime": 1792101225.7423806,
+    "seen": 1792101231.2860496,
+    "ast_hash": "84875c84b9b4f50156c91cc8deb853f2",
     "semantic_hash": ""
   },
   "public/principal.html": {
-    "mtime": 1792081769.1655066,
-    "seen": 1792100292.7345927,
-    "ast_hash": "c853d6c2c6273d100f6a75f19269a7be",
+    "mtime": 1792101218.1375008,
+    "seen": 1792101231.2860496,
+    "ast_hash": "c74defc2360e27dc6c7ddbfc59ac649f",
     "semantic_hash": ""
   },
   "public/puesto-experiencia.html": {
@@ -699,6 +699,12 @@
     "mtime": 1792081769.163502,
     "seen": 1792100292.7355926,
     "ast_hash": "32fda0bbb24757f47cfcf572a56a0bd8",
+    "semantic_hash": ""
+  },
+  "public/js/backend.js": {
+    "mtime": 1792101215.0575938,
+    "seen": 1792101231.28505,
+    "ast_hash": "dc83251b71a72d9444d8d47d732be826",
     "semantic_hash": ""
   }
 }
