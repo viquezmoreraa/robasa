@@ -144,7 +144,7 @@
         <p>Su postulación y cuenta de usuario han sido registradas exitosamente en el sistema.</p>
 
         <!-- Aquí rediriges a la página principal hecha por tu compañero, pasando opcionalmente el correo o token de sesión -->
-        <a href="index.html" class="btn-home" id="btnIrInicio">Ir a la página principal</a>
+        <a href="/postulante" class="btn-home" id="btnIrInicio">Ir a mi panel</a>
     </main>
 
     <script>
@@ -154,7 +154,7 @@
         
         // Si tu compañero configura su index.html para recibir sesión, puedes apuntarlo ej: index.html?sesion=activa&correo=...
         if (correo) {
-            document.getElementById('btnIrInicio').href = `index.html?sesion=iniciada&usuario=${encodeURIComponent(correo)}`;
+            document.getElementById('btnIrInicio').href = "/postulante";
         }
     </script>
 </body>
