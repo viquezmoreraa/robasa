@@ -147,15 +147,6 @@
         <a href="/postulante" class="btn-home" id="btnIrInicio">Ir a mi panel</a>
     </main>
 
-    <script>
-        // Opcional: si la página de tu compañero necesita recibir el correo o sesión, puedes capturarlo de la URL:
-        const urlParams = new URLSearchParams(window.location.search);
-        const correo = urlParams.get('nuevo_correo') || urlParams.get('correo');
-        
-        // Si tu compañero configura su index.html para recibir sesión, puedes apuntarlo ej: index.html?sesion=activa&correo=...
-        if (correo) {
-            document.getElementById('btnIrInicio').href = "/postulante";
-        }
-    </script>
+    <script src="js/backend.js"></script>
 </body>
 </html>

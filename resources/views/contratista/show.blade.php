@@ -61,8 +61,8 @@
     <div class="card">
         <h2>Datos de la postulación</h2>
         <dl class="datos">
-            @foreach ($postulacion->datos ?? [] as $campo => $valor)
-                <div><dt>{{ str_replace('_', ' ', $campo) }}</dt><dd>{{ is_array($valor) ? implode(', ', $valor) : ($valor ?: '—') }}</dd></div>
+            @foreach ($postulacion->camposFormulario() as $campo => $valor)
+                <div><dt>{{ $campo }}</dt><dd>{{ $valor ?? '—' }}</dd></div>
             @endforeach
         </dl>
     </div>

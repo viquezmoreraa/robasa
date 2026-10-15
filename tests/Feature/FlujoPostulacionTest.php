@@ -23,10 +23,13 @@ class FlujoPostulacionTest extends TestCase
         // 1. El postulante envía el formulario
         $this->post('/postulaciones', [
             'puesto' => 'chofer', 'nombre' => 'Ana Pérez', 'cedula' => '123',
+            'dia' => '5', 'mes' => '3', 'anio' => '1995', 'tiene_licencia' => 'si', 'tipo_licencia' => 'B1',
             'nuevo_correo' => 'ana@test.com', 'password' => 'clave1234',
         ])->assertRedirect('/exito.html?nuevo_correo=ana%40test.com');
         $postulacion = Postulacion::firstOrFail();
-        $this->assertSame('Ana Pérez', $postulacion->datos['nombre']);
+        $this->assertSame('Ana Pérez', $postulacion->nombre);
+        $this->assertSame('1995-03-05', $postulacion->fecha_nacimiento->toDateString());
+        $this->assertTrue($postulacion->tiene_licencia);
         $this->post('/logout');
 
         // 2. El contratista entra con Jose2026 y asigna una prueba

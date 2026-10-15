@@ -62,8 +62,8 @@
                 <h2>Mi postulación · {{ str_replace('_', ' ', $postulacion->puesto ?? '') }}</h2>
                 <dl class="datos">
                     <div><dt>Correo</dt><dd>{{ $postulacion->correo }}</dd></div>
-                    @foreach ($postulacion->datos ?? [] as $campo => $valor)
-                        <div><dt>{{ str_replace('_', ' ', $campo) }}</dt><dd>{{ is_array($valor) ? implode(', ', $valor) : ($valor ?: '—') }}</dd></div>
+                    @foreach ($postulacion->camposFormulario() as $campo => $valor)
+                        <div><dt>{{ $campo }}</dt><dd>{{ $valor ?? '—' }}</dd></div>
                     @endforeach
                 </dl>
             @else
