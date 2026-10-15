@@ -26,5 +26,6 @@
   "58": "contratista/index.blade.php",
   "59": "show.blade.php",
   "60": "postulante/index.blade.php",
-  "61": "app.blade.php"
+  "61": "app.blade.php",
+  "62": "backend.js"
 }
