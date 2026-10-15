@@ -58,6 +58,38 @@
         body::before { background: #f58426; top: -100px; left: -100px; }
         body::after { background: #123b70; bottom: -100px; right: -100px; }
 
+        /* Botón superior de retroceso con flecha */
+        .top-back-bar {
+            position: absolute;
+            top: 1.5rem;
+            left: 1.5rem;
+            z-index: 10;
+        }
+
+        .btn-back-top {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-radius: 2rem;
+            color: rgba(255, 255, 255, 0.85);
+            font-size: 0.825rem;
+            font-weight: 500;
+            text-decoration: none;
+            transition: all 0.2s ease;
+        }
+
+        .btn-back-top:hover {
+            background: rgba(245, 132, 38, 0.2);
+            border-color: #f58426;
+            color: #ffffff;
+            transform: translateY(-1px);
+        }
+
         /* Contenedor principal */
         main {
             position: relative;
@@ -122,7 +154,7 @@
             letter-spacing: 0.03em;
         }
 
-        input, select {
+        input, select, textarea {
             width: 100%;
             padding: 0.75rem 1rem;
             background: rgba(10, 25, 50, 0.7);
@@ -134,7 +166,7 @@
             transition: all 0.2s ease;
         }
 
-        input:focus, select:focus {
+        input:focus, select:focus, textarea:focus {
             outline: none;
             border-color: #f58426;
             background: rgba(10, 25, 50, 0.95);
@@ -144,6 +176,11 @@
         select option {
             background: #0f2346;
             color: #ffffff;
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 80px;
         }
 
         /* Contenedor para Fecha de Nacimiento (3 selects lado a lado) */
@@ -160,7 +197,7 @@
             border-radius: 0.75rem;
             padding: 1rem;
             margin-top: 0.8rem;
-            display: none; /* Oculto por defecto */
+            display: none;
             animation: fadeIn 0.4s ease forwards;
         }
 
@@ -193,7 +230,7 @@
             filter: brightness(1.05);
         }
 
-        /* Enlace de regresar */
+        /* Enlace de regresar inferior */
         .back-link {
             display: block;
             text-align: center;
@@ -207,14 +244,29 @@
         .back-link:hover {
             color: #ffffff;
         }
+
+        @media (max-width: 480px) {
+            .top-back-bar {
+                top: 1rem;
+                left: 1rem;
+            }
+        }
     </style>
 </head>
 <body>
 
+    <!-- Botón superior con flecha para retroceder fácilmente -->
+    <div class="top-back-bar">
+        <a href="terminos.html" class="btn-back-top">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+            Atrás
+        </a>
+    </div>
+
     <main>
         <div class="header-section">
             <img src="imagenes/robasa-logo.png" alt="ROBASA Distribuidora" class="logo-img">
-            <h2>Información Personal</h2>
+            <h2>Datos Personales</h2>
             <div class="selected-puesto" id="puestoDisplay">Postulándose para: ...</div>
         </div>
 
@@ -233,13 +285,12 @@
                 <input type="text" id="cedula" name="cedula" placeholder="Ej. 1-0234-0567" required>
             </div>
 
-            <!-- FECHA DE NACIMIENTO SÚPER FÁCIL (Día, Mes, Año) -->
+            <!-- FECHA DE NACIMIENTO (Día, Mes, Año) -->
             <div class="form-group">
                 <label>Fecha de nacimiento</label>
                 <div class="date-container">
                     <select id="dia" name="dia" required>
                         <option value="" disabled selected>Día</option>
-                        <!-- Se llena con JS del 1 al 31 -->
                     </select>
                     <select id="mes" name="mes" required>
                         <option value="" disabled selected>Mes</option>
@@ -258,7 +309,6 @@
                     </select>
                     <select id="anio" name="anio" required>
                         <option value="" disabled selected>Año</option>
-                        <!-- Se llena con JS -->
                     </select>
                 </div>
             </div>
@@ -273,6 +323,12 @@
                 <input type="email" id="correo" name="correo" placeholder="Ej. juan.perez@correo.com" required>
             </div>
 
+            <!-- DIRECCIÓN EXACTA EN UNA SOLA CASILLA -->
+            <div class="form-group">
+                <label for="direccion">Dirección exacta de residencia</label>
+                <textarea id="direccion" name="direccion" placeholder="Ej. Provincia, Cantón, Distrito y otras señas (Ej: Alajuela, Poás, San Rafael, 100m norte de la plaza)" required></textarea>
+            </div>
+
             <!-- PREGUNTA DE LICENCIA -->
             <div class="form-group">
                 <label for="tiene_licencia">¿Cuenta con licencia de conducir?</label>
@@ -283,7 +339,7 @@
                 </select>
             </div>
 
-            <!-- BLOQUE CONDICIONAL (Solo aparece si dice que SÍ tiene licencia) -->
+            <!-- BLOQUE CONDICIONAL DE LICENCIA Y VEHÍCULO -->
             <div id="licenciaDetails" class="conditional-box">
                 <div class="form-group">
                     <label for="tipo_licencia">Tipo de licencia</label>
@@ -315,15 +371,14 @@
         <a href="terminos.html" class="back-link">← Volver a términos</a>
     </main>
 
-    <!-- Script de apoyo para llenar fechas automáticamente y mostrar/ocultar licencia -->
+    <!-- Script de apoyo -->
     <script>
-        // 1. Recuperar el puesto de la URL
         const urlParams = new URLSearchParams(window.location.search);
         const puesto = urlParams.get('puesto') || 'General';
         document.getElementById('puestoDisplay').textContent = `Postulándose para: ${puesto.replace(/_/g, ' ')}`;
         document.getElementById('inputPuesto').value = puesto;
 
-        // 2. Rellenar selectores de Fecha de forma automática (Días y Años)
+        // Llenar selectores de Fecha
         const selectDia = document.getElementById('dia');
         for (let i = 1; i <= 31; i++) {
             let opt = document.createElement('option');
@@ -334,7 +389,6 @@
 
         const selectAnio = document.getElementById('anio');
         const anioActual = new Date().getFullYear();
-        // Permitir personas desde los 16 hasta los 80 años
         for (let i = anioActual - 16; i >= anioActual - 80; i--) {
             let opt = document.createElement('option');
             opt.value = i;
@@ -342,7 +396,6 @@
             selectAnio.appendChild(opt);
         }
 
-        // 3. Función para mostrar u ocultar las preguntas de vehículo si responde SÍ a licencia
         function toggleLicenciaDetails() {
             const selectLicencia = document.getElementById('tiene_licencia').value;
             const detailsBox = document.getElementById('licenciaDetails');
