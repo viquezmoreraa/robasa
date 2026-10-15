@@ -11,7 +11,8 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware): void {
-        //
+        $middleware->alias(['contratista' => \App\Http\Middleware\EsContratista::class]);
+        $middleware->redirectUsersTo(fn ($request) => $request->user()?->esContratista() ? '/contratista' : '/postulante');
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         //
