@@ -1,0 +1,535 @@
+<!doctype html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#0d2347">
+    <meta name="description" content="Vacantes Disponibles en ROBASA Distribuidora.">
+    <title>ROBASA | Vacantes Disponibles</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="imagenes/robasa-logo.png">
+
+    <!-- Tipografía Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            color-scheme: dark;
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            background: #091833;
+            color: #ffffff;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            padding: 2rem 1rem;
+            background: 
+                radial-gradient(circle at 15% 20%, rgba(245, 132, 38, 0.25) 0%, transparent 40%),
+                radial-gradient(circle at 85% 80%, rgba(18, 59, 112, 0.6) 0%, transparent 50%),
+                linear-gradient(135deg, #091833 0%, #0f2d59 100%);
+            position: relative;
+        }
+
+        /* Elementos decorativos flotantes */
+        body::before, body::after {
+            content: '';
+            position: absolute;
+            width: 400px;
+            height: 400px;
+            border-radius: 50%;
+            z-index: 0;
+            filter: blur(80px);
+            opacity: 0.15;
+            pointer-events: none;
+        }
+        body::before { background: #f58426; top: -100px; left: -100px; }
+        body::after { background: #123b70; bottom: -100px; right: -100px; }
+
+        /* Contenedor principal */
+        main {
+            position: relative;
+            z-index: 1;
+            width: min(100%, 480px);
+            padding: 2rem 1.5rem;
+            background: rgba(15, 35, 70, 0.65);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 1.5rem;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            animation: fadeIn 0.6s ease-out forwards;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .header-section {
+            text-align: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .logo-img {
+            max-width: 180px;
+            height: auto;
+            margin-bottom: 1rem;
+            filter: drop-shadow(0 6px 12px rgba(0, 0, 0, 0.3));
+        }
+
+        h2 {
+            font-size: 1.35rem;
+            font-weight: 700;
+            color: #ffffff;
+            letter-spacing: -0.01em;
+        }
+
+        /* Lista de vacantes */
+        .vacantes-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0.8rem;
+        }
+
+        /* Tarjeta de cada Vacante */
+        .vacante-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 0.85rem;
+            overflow: hidden;
+            transition: all 0.25s ease;
+        }
+
+        .vacante-card:hover {
+            border-color: rgba(245, 132, 38, 0.5);
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        /* Botón/Encabezado del puesto */
+        .vacante-header {
+            width: 100%;
+            padding: 1rem 1.25rem;
+            background: transparent;
+            border: none;
+            color: #ffffff;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.95rem;
+            font-weight: 600;
+            text-align: left;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: color 0.2s ease;
+        }
+
+        .vacante-header:hover {
+            color: #f58426;
+        }
+
+        .arrow-icon {
+            transition: transform 0.3s ease;
+            color: rgba(255, 255, 255, 0.6);
+            flex-shrink: 0;
+            margin-left: 0.5rem;
+        }
+
+        /* Estado expandido */
+        .vacante-card.active {
+            border-color: #f58426;
+            background: rgba(18, 59, 112, 0.4);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+        }
+
+        .vacante-card.active .arrow-icon {
+            transform: rotate(180deg);
+            color: #f58426;
+        }
+
+        /* Detalle desplegable */
+        .vacante-body {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s cubic-bezier(0, 1, 0, 1), padding 0.3s ease;
+            padding: 0 1.25rem;
+            background: rgba(10, 25, 50, 0.5);
+        }
+
+        .vacante-card.active .vacante-body {
+            max-height: 500px;
+            padding: 1rem 1.25rem 1.25rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .detail-block {
+            margin-bottom: 0.9rem;
+        }
+
+        .detail-title {
+            font-size: 0.8rem;
+            font-weight: 700;
+            color: #f58426;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 0.3rem;
+        }
+
+        .detail-text {
+            font-size: 0.85rem;
+            color: rgba(255, 255, 255, 0.85);
+            line-height: 1.45;
+        }
+
+        /* Botón Crear Postulación */
+        .btn-apply {
+            display: block;
+            width: 100%;
+            margin-top: 1rem;
+            padding: 0.75rem 1rem;
+            background: linear-gradient(135deg, #f58426 0%, #e06d12 100%);
+            border: none;
+            border-radius: 0.6rem;
+            color: #ffffff;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.9rem;
+            font-weight: 600;
+            text-align: center;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            box-shadow: 0 4px 12px rgba(245, 132, 38, 0.3);
+        }
+
+        .btn-apply:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 18px rgba(245, 132, 38, 0.5);
+            filter: brightness(1.05);
+        }
+
+        /* Botón Regresar al Inicio */
+        .back-link {
+            display: block;
+            text-align: center;
+            margin-top: 1.5rem;
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 0.85rem;
+            text-decoration: none;
+            transition: color 0.2s ease;
+        }
+
+        .back-link:hover {
+            color: #ffffff;
+        }
+    </style>
+</head>
+<body>
+
+    <main>
+        <div class="header-section">
+            <img src="imagenes/robasa-logo.png" alt="ROBASA Distribuidora" class="logo-img">
+            <h2>Vacantes Disponibles</h2>
+        </div>
+
+        <div class="vacantes-list">
+            
+            <!-- 1. Chofer -->
+            <div class="vacante-card">
+                <button class="vacante-header" onclick="toggleVacante(this)">
+                    <span>Chofer</span>
+                    <svg class="arrow-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                </button>
+                <div class="vacante-body">
+                    <div class="detail-block">
+                        <div class="detail-title">Descripción:</div>
+                        <div class="detail-text">Encargado de la entrega puntual y segura de productos a clientes y puntos de venta. Responsable del control de inventario en ruta y verificación de facturación.</div>
+                    </div>
+                    <div class="detail-block">
+                        <div class="detail-title">Requisitos:</div>
+                        <div class="detail-text">Licencia al día (B2/B3), experiencia en manejo de unidades de carga y servicio al cliente.</div>
+                    </div>
+                    <a href="terminos.html?puesto=chofer" class="btn-apply">Crear postulación</a>
+                </div>
+            </div>
+
+            <!-- 2. Promotor - mercaderista -->
+            <div class="vacante-card">
+                <button class="vacante-header" onclick="toggleVacante(this)">
+                    <span>Promotor - mercaderista</span>
+                    <svg class="arrow-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                </button>
+                <div class="vacante-body">
+                    <div class="detail-block">
+                        <div class="detail-title">Descripción:</div>
+                        <div class="detail-text">Garantizar la exhibición limpia, ordenada y atractiva de los productos en puntos de venta asignados y rotación de inventario.</div>
+                    </div>
+                    <div class="detail-block">
+                        <div class="detail-title">Requisitos:</div>
+                        <div class="detail-text">Bachillerato de secundaria, habilidades comunicativas y experiencia previa en canal detalle.</div>
+                    </div>
+                    <a href="terminos.html?puesto=promotor" class="btn-apply">Crear postulación</a>
+                </div>
+            </div>
+
+            <!-- 3. Encargado de ruta -->
+            <div class="vacante-card">
+                <button class="vacante-header" onclick="toggleVacante(this)">
+                    <span>Encargado de ruta</span>
+                    <svg class="arrow-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                </button>
+                <div class="vacante-body">
+                    <div class="detail-block">
+                        <div class="detail-title">Descripción:</div>
+                        <div class="detail-text">Supervisión y optimización de las rutas de distribución y entrega de mercancía a nivel nacional.</div>
+                    </div>
+                    <div class="detail-block">
+                        <div class="detail-title">Requisitos:</div>
+                        <div class="detail-text">Estudios en logística, administración o afines, manejo de personal y liderazgo.</div>
+                    </div>
+                    <a href="terminos.html?puesto=encargado_ruta" class="btn-apply">Crear postulación</a>
+                </div>
+            </div>
+
+            <!-- 4. Almacen -->
+            <div class="vacante-card">
+                <button class="vacante-header" onclick="toggleVacante(this)">
+                    <span>Almacen</span>
+                    <svg class="arrow-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                </button>
+                <div class="vacante-body">
+                    <div class="detail-block">
+                        <div class="detail-title">Descripción:</div>
+                        <div class="detail-text">Recepción, alistado, empaque y control riguroso de productos en bodega central.</div>
+                    </div>
+                    <div class="detail-block">
+                        <div class="detail-title">Requisitos:</div>
+                        <div class="detail-text">Experiencia previa en bodegas, orden, disciplina y disponibilidad de horarios.</div>
+                    </div>
+                    <a href="terminos.html?puesto=almacen" class="btn-apply">Crear postulación</a>
+                </div>
+            </div>
+
+            <!-- 5. Ayudante de carga -->
+            <div class="vacante-card">
+                <button class="vacante-header" onclick="toggleVacante(this)">
+                    <span>Ayudante de carga</span>
+                    <svg class="arrow-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                </button>
+                <div class="vacante-body">
+                    <div class="detail-block">
+                        <div class="detail-title">Descripción:</div>
+                        <div class="detail-text">Apoyo directo en la carga, descarga y entrega de mercadería en los camiones de distribución.</div>
+                    </div>
+                    <div class="detail-block">
+                        <div class="detail-title">Requisitos:</div>
+                        <div class="detail-text">Buena condición física, proactividad y disposición para trabajo en equipo.</div>
+                    </div>
+                    <a href="terminos.html?puesto=ayudante_carga" class="btn-apply">Crear postulación</a>
+                </div>
+            </div>
+
+            <!-- 6. Agente de ventas -->
+            <div class="vacante-card">
+                <button class="vacante-header" onclick="toggleVacante(this)">
+                    <span>Agente de ventas</span>
+                    <svg class="arrow-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                </button>
+                <div class="vacante-body">
+                    <div class="detail-block">
+                        <div class="detail-title">Descripción:</div>
+                        <div class="detail-text">Colocación de productos, apertura de nuevos clientes y cumplimiento de metas de ventas mensuales.</div>
+                    </div>
+                    <div class="detail-block">
+                        <div class="detail-title">Requisitos:</div>
+                        <div class="detail-text">Experiencia en ventas de campo, excelente servicio al cliente y orientación a resultados.</div>
+                    </div>
+                    <a href="terminos.html?puesto=agente_ventas" class="btn-apply">Crear postulación</a>
+                </div>
+            </div>
+
+            <!-- 7. Agente de ventas junior -->
+            <div class="vacante-card">
+                <button class="vacante-header" onclick="toggleVacante(this)">
+                    <span>Agente de ventas junior</span>
+                    <svg class="arrow-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                </button>
+                <div class="vacante-body">
+                    <div class="detail-block">
+                        <div class="detail-title">Descripción:</div>
+                        <div class="detail-text">Apoyo en la gestión de cartera de clientes y prospección comercial bajo supervisión.</div>
+                    </div>
+                    <div class="detail-block">
+                        <div class="detail-title">Requisitos:</div>
+                        <div class="detail-text">Ganas de superación, facilidad de palabra y deseos de crecer en el área comercial.</div>
+                    </div>
+                    <a href="terminos.html?puesto=agente_ventas_junior" class="btn-apply">Crear postulación</a>
+                </div>
+            </div>
+
+            <!-- 8. Agente de ventas Mayorista -->
+            <div class="vacante-card">
+                <button class="vacante-header" onclick="toggleVacante(this)">
+                    <span>Agente de ventas Mayorista</span>
+                    <svg class="arrow-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                </button>
+                <div class="vacante-body">
+                    <div class="detail-block">
+                        <div class="detail-title">Descripción:</div>
+                        <div class="detail-text">Atención y negociación comercial con cuentas clave y distribuidores mayoristas de la empresa.</div>
+                    </div>
+                    <div class="detail-block">
+                        <div class="detail-title">Requisitos:</div>
+                        <div class="detail-text">Sólida experiencia en ventas a volumen, negociación avanzada y vehículo propio.</div>
+                    </div>
+                    <a href="terminos.html?puesto=agente_mayorista" class="btn-apply">Crear postulación</a>
+                </div>
+            </div>
+
+            <!-- 9. Supervisor de Ventas -->
+            <div class="vacante-card">
+                <button class="vacante-header" onclick="toggleVacante(this)">
+                    <span>Supervisor de Ventas</span>
+                    <svg class="arrow-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                </button>
+                <div class="vacante-body">
+                    <div class="detail-block">
+                        <div class="detail-title">Descripción:</div>
+                        <div class="detail-text">Liderazgo, motivación y control de la fuerza de ventas de campo para asegurar el cumplimiento de presupuestos.</div>
+                    </div>
+                    <div class="detail-block">
+                        <div class="detail-title">Requisitos:</div>
+                        <div class="detail-text">Experiencia comprobada supervisando equipos de ventas y análisis de métricas comerciales.</div>
+                    </div>
+                    <a href="terminos.html?puesto=supervisor_ventas" class="btn-apply">Crear postulación</a>
+                </div>
+            </div>
+
+            <!-- 10. Cuentas por Cobrar -->
+            <div class="vacante-card">
+                <button class="vacante-header" onclick="toggleVacante(this)">
+                    <span>Cuentas por Cobrar</span>
+                    <svg class="arrow-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                </button>
+                <div class="vacante-body">
+                    <div class="detail-block">
+                        <div class="detail-title">Descripción:</div>
+                        <div class="detail-text">Gestión de cobro, aplicación de pagos, control de estados de cuenta de clientes y gestión de créditos.</div>
+                    </div>
+                    <div class="detail-block">
+                        <div class="detail-title">Requisitos:</div>
+                        <div class="detail-text">Formación en contabilidad o administración, manejo de sistemas financieros y alta precisión.</div>
+                    </div>
+                    <a href="terminos.html?puesto=cuentas_cobrar" class="btn-apply">Crear postulación</a>
+                </div>
+            </div>
+
+            <!-- 11. Facturación -->
+            <div class="vacante-card">
+                <button class="vacante-header" onclick="toggleVacante(this)">
+                    <span>Facturación</span>
+                    <svg class="arrow-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                </button>
+                <div class="vacante-body">
+                    <div class="detail-block">
+                        <div class="detail-title">Descripción:</div>
+                        <div class="detail-text">Emisión y control de facturas electrónicas, notas de crédito y documentación fiscal de salida.</div>
+                    </div>
+                    <div class="detail-block">
+                        <div class="detail-title">Requisitos:</div>
+                        <div class="detail-text">Conocimiento en normativa de facturación electrónica de Costa Rica, agilidad numérica y Excel.</div>
+                    </div>
+                    <a href="terminos.html?puesto=facturacion" class="btn-apply">Crear postulación</a>
+                </div>
+            </div>
+
+            <!-- 12. Director de Operaciones -->
+            <div class="vacante-card">
+                <button class="vacante-header" onclick="toggleVacante(this)">
+                    <span>Director de Operaciones</span>
+                    <svg class="arrow-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                </button>
+                <div class="vacante-body">
+                    <div class="detail-block">
+                        <div class="detail-title">Descripción:</div>
+                        <div class="detail-text">Planificación estratégica, dirección y control general de las operaciones de cadena de suministro y distribución.</div>
+                    </div>
+                    <div class="detail-block">
+                        <div class="detail-title">Requisitos:</div>
+                        <div class="detail-text">Licenciatura en Ingeniería Industrial, Administración o afines, con amplia experiencia gerencial.</div>
+                    </div>
+                    <a href="terminos.html?puesto=director_operaciones" class="btn-apply">Crear postulación</a>
+                </div>
+            </div>
+
+            <!-- 13. Analista de Datos -->
+            <div class="vacante-card">
+                <button class="vacante-header" onclick="toggleVacante(this)">
+                    <span>Analista de Datos</span>
+                    <svg class="arrow-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                </button>
+                <div class="vacante-body">
+                    <div class="detail-block">
+                        <div class="detail-title">Descripción:</div>
+                        <div class="detail-text">Recopilación, procesamiento y análisis de métricas de ventas e inventarios para la toma de decisiones gerenciales.</div>
+                    </div>
+                    <div class="detail-block">
+                        <div class="detail-title">Requisitos:</div>
+                        <div class="detail-text">Dominio de herramientas de análisis y bases de datos, Excel avanzado, SQL o Power BI.</div>
+                    </div>
+                    <a href="terminos.html?puesto=analista_datos" class="btn-apply">Crear postulación</a>
+                </div>
+            </div>
+
+            <!-- 14. Encargado de proveduria jr -->
+            <div class="vacante-card">
+                <button class="vacante-header" onclick="toggleVacante(this)">
+                    <span>Encargado de proveduria jr</span>
+                    <svg class="arrow-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                </button>
+                <div class="vacante-body">
+                    <div class="detail-block">
+                        <div class="detail-title">Descripción:</div>
+                        <div class="detail-text">Gestión de compras menores, cotizaciones con proveedores y control de suministros internos.</div>
+                    </div>
+                    <div class="detail-block">
+                        <div class="detail-title">Requisitos:</div>
+                        <div class="detail-text">Formación técnica o universitaria afín, negociación con proveedores y organización.</div>
+                    </div>
+                    <a href="terminos.html?puesto=proveduria_jr" class="btn-apply">Crear postulación</a>
+                </div>
+            </div>
+
+        </div>
+
+        <a href="principal.html" class="back-link">← Volver al Inicio</a>
+    </main>
+
+    <!-- Script para el acordeón interactivo -->
+    <script>
+        function toggleVacante(button) {
+            const currentCard = button.parentElement;
+            const allCards = document.querySelectorAll('.vacante-card');
+
+            allCards.forEach(card => {
+                if (card !== currentCard) {
+                    card.classList.remove('active');
+                }
+            });
+
+            currentCard.classList.toggle('active');
+        }
+    </script>
+</body>
+</html>
