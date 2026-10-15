@@ -5,6 +5,7 @@ namespace App\Services\Psicometria;
 use App\Services\Psicometria\Estrategias\Combinacion;
 use App\Services\Psicometria\Estrategias\DimensionMayor;
 use App\Services\Psicometria\Estrategias\EstrategiaResultado;
+use App\Services\Psicometria\Estrategias\PatronDisc;
 use App\Services\Psicometria\Estrategias\PuntajePorDimension;
 use App\Services\Psicometria\Estrategias\PuntajeT;
 use App\Services\Psicometria\Estrategias\TotalCorrectas;
@@ -18,7 +19,7 @@ use Illuminate\Support\Facades\DB;
 final class MotorPsicometrico
 {
     /** Súbanla cuando cambien las reglas de cálculo; queda en cada resultado. */
-    public const VERSION = '1.1.0';
+    public const VERSION = '1.2.0';
 
     public function calcular(int $asignacionId): ResultadoFinal
     {
@@ -60,15 +61,18 @@ final class MotorPsicometrico
 
     private function validarCompletitud(int $asignacionId, int $pruebaId): void
     {
-        // Para preguntas MAS_MENOS hay que exigir ambas selecciones; ajustar
-        // aquí cuando se confirme el formato real de cada instrumento.
+        // Cuenta cuántas respuestas distintas (UNICA/MAS/MENOS) tiene cada pregunta
+        // obligatoria. Una pregunta normal necesita 1; una MAS_MENOS necesita 2
+        // (una MAS y una MENOS, de palabras distintas).
         $faltantes = DB::table('preguntas as p')
             ->leftJoin('respuestas as r', function ($join) use ($asignacionId) {
                 $join->on('r.pregunta_id', '=', 'p.id')->where('r.asignacion_id', '=', $asignacionId);
             })
             ->where('p.prueba_id', $pruebaId)
             ->where('p.obligatoria', true)
-            ->whereNull('r.id')
+            ->select('p.id', 'p.tipo')
+            ->groupBy('p.id', 'p.tipo')
+            ->havingRaw("COUNT(r.id) < IF(p.tipo = 'MAS_MENOS', 2, 1)")
             ->count();
 
         if ($faltantes > 0) {
@@ -81,16 +85,19 @@ final class MotorPsicometrico
     {
         $dimensiones = DB::table('dimensiones')->where('prueba_id', $pruebaId)->orderBy('orden')->get();
 
-        // Si el candidato no suma nada en una dimensión, simplemente no aparece: cuenta como 0.
+        // Puntaje neto por dimensión: una respuesta 'MENOS' resta en vez de sumar.
+        // Para UNICA (y ESCALA) el signo siempre es +1, igual que antes.
         $brutos = DB::table('respuestas as r')
             ->join('opcion_dimension as od', 'od.opcion_id', '=', 'r.opcion_id')
             ->where('r.asignacion_id', $asignacionId)
             ->groupBy('od.dimension_id')
-            ->selectRaw('od.dimension_id, SUM(od.puntos) as bruto')
+            ->selectRaw("od.dimension_id, SUM(od.puntos * IF(r.seleccion = 'MENOS', -1, 1)) as bruto")
             ->pluck('bruto', 'dimension_id');
 
         // Máximo posible = suma, por pregunta, del mayor puntaje que alimenta la dimensión.
-        // Calculado desde la matriz: si TH cambia la prueba, se actualiza solo.
+        // Para preguntas MAS_MENOS esto no es un "máximo" literal (el neto puede ser
+        // negativo); se deja igual por compatibilidad con las demás estrategias, que
+        // sí lo usan como porcentaje. PatronDisc no lo necesita.
         $maximos = collect(DB::select(
             'SELECT t.dimension_id, SUM(t.mx) AS maximo FROM (
                 SELECT od.dimension_id, o.pregunta_id, MAX(od.puntos) AS mx
@@ -121,6 +128,7 @@ final class MotorPsicometrico
             'PUNTAJE_POR_DIMENSION' => new PuntajePorDimension(),
             'TOTAL_CORRECTAS'       => new TotalCorrectas(),
             'PUNTAJE_T'             => new PuntajeT($this->cargarBaremos($pruebaId, $sexo)),
+            'PATRON_DISC'           => new PatronDisc($this->cargarClasificacionDisc($pruebaId)),
             default => throw new DomainException("Método de resultado desconocido: {$metodo}"),
         };
     }
@@ -129,7 +137,7 @@ final class MotorPsicometrico
     private function cargarBaremos(int $pruebaId, ?string $sexo): array
     {
         if (!in_array($sexo, ['H', 'M'], true)) {
-            throw new DomainException('Falta el sexo del candidato (H o M) para aplicar el baremo.');
+            return []; // otras estrategias (p. ej. PATRON_DISC) no usan baremos por sexo
         }
 
         $baremos = [];
@@ -144,6 +152,17 @@ final class MotorPsicometrico
 
         return $baremos;
     }
+
+    /** @return array<string,string|null> código de 4 posiciones => código de perfil (o null) */
+    private function cargarClasificacionDisc(int $pruebaId): array
+{
+    return DB::table('disc_clasificacion')
+        ->join('perfiles', 'perfiles.id', '=', 'disc_clasificacion.perfil_id')
+        ->where('disc_clasificacion.prueba_id', $pruebaId)
+        ->select('disc_clasificacion.codigo as codigo_disc', 'perfiles.codigo as codigo_perfil')
+        ->pluck('codigo_perfil', 'codigo_disc')
+        ->all();
+}
 
     /** @param ResultadoDimension[] $detalle */
     private function guardar(int $asignacionId, array $detalle, ResultadoFinal $final): void
