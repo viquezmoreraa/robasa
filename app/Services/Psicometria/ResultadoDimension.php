@@ -2,7 +2,7 @@
 
 namespace App\Services\Psicometria;
 
-/** Puntaje de UNA dimensión para UNA asignación (objeto inmutable). */
+/** Puntaje de UNA dimensión (o subescala) para UNA asignación (objeto inmutable). */
 final class ResultadoDimension
 {
     public function __construct(
@@ -11,6 +11,7 @@ final class ResultadoDimension
         public readonly string $nombre,
         public readonly float $bruto,
         public readonly ?float $maximo = null,
+        public readonly ?int $padreId = null,   // dimensión principal, si esta es una subescala
     ) {
     }
 

@@ -6,6 +6,7 @@ use App\Services\Psicometria\Estrategias\Combinacion;
 use App\Services\Psicometria\Estrategias\DimensionMayor;
 use App\Services\Psicometria\Estrategias\EstrategiaResultado;
 use App\Services\Psicometria\Estrategias\PuntajePorDimension;
+use App\Services\Psicometria\Estrategias\PuntajeT;
 use App\Services\Psicometria\Estrategias\TotalCorrectas;
 use DomainException;
 use Illuminate\Support\Facades\DB;
@@ -17,7 +18,7 @@ use Illuminate\Support\Facades\DB;
 final class MotorPsicometrico
 {
     /** Súbanla cuando cambien las reglas de cálculo; queda en cada resultado. */
-    public const VERSION = '1.0.0';
+    public const VERSION = '1.1.0';
 
     public function calcular(int $asignacionId): ResultadoFinal
     {
@@ -45,7 +46,12 @@ final class MotorPsicometrico
         $rangos = DB::table('rangos_interpretacion')->where('prueba_id', $prueba->id)->get()
             ->map(fn ($r) => (array) $r)->all();
 
-        $final = $this->estrategiaPara($prueba->metodo_resultado)->interpretar($detalle, $perfiles, $rangos);
+        $estrategia = $this->estrategiaPara(
+            $prueba->metodo_resultado,
+            (int) $prueba->id,
+            $asignacion->sexo_baremo ?? null,
+        );
+        $final = $estrategia->interpretar($detalle, $perfiles, $rangos);
 
         $this->guardar($asignacionId, $detalle, $final);
 
@@ -103,18 +109,40 @@ final class MotorPsicometrico
             nombre: $d->nombre,
             bruto: (float) $brutos->get($d->id, 0),
             maximo: $maximos->has($d->id) ? (float) $maximos->get($d->id) : null,
+            padreId: ($d->dimension_padre_id ?? null) !== null ? (int) $d->dimension_padre_id : null,
         ))->all();
     }
 
-    private function estrategiaPara(string $metodo): EstrategiaResultado
+    private function estrategiaPara(string $metodo, int $pruebaId, ?string $sexo): EstrategiaResultado
     {
         return match ($metodo) {
             'DIMENSION_MAYOR'       => new DimensionMayor(),
             'COMBINACION'           => new Combinacion(2),
             'PUNTAJE_POR_DIMENSION' => new PuntajePorDimension(),
             'TOTAL_CORRECTAS'       => new TotalCorrectas(),
+            'PUNTAJE_T'             => new PuntajeT($this->cargarBaremos($pruebaId, $sexo)),
             default => throw new DomainException("Método de resultado desconocido: {$metodo}"),
         };
+    }
+
+    /** @return array<int,array<int,int>> dimension_id => [puntaje_directo => T] */
+    private function cargarBaremos(int $pruebaId, ?string $sexo): array
+    {
+        if (!in_array($sexo, ['H', 'M'], true)) {
+            throw new DomainException('Falta el sexo del candidato (H o M) para aplicar el baremo.');
+        }
+
+        $baremos = [];
+        $filas = DB::table('baremos')
+            ->where('prueba_id', $pruebaId)
+            ->where('sexo', $sexo)
+            ->get(['dimension_id', 'puntaje_directo', 'puntaje_t']);
+
+        foreach ($filas as $f) {
+            $baremos[(int) $f->dimension_id][(int) $f->puntaje_directo] = (int) $f->puntaje_t;
+        }
+
+        return $baremos;
     }
 
     /** @param ResultadoDimension[] $detalle */
@@ -130,6 +158,7 @@ final class MotorPsicometrico
                 'puntaje_bruto'  => $d->bruto,
                 'puntaje_maximo' => $d->maximo,
                 'porcentaje'     => $d->porcentaje(),
+                'puntaje_t'      => $final->puntajeTPorDimension[$d->dimensionId] ?? null,
                 'rango_id'       => $final->rangoPorDimension[$d->dimensionId] ?? null,
             ], $detalle));
 
