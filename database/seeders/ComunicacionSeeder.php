@@ -46,10 +46,7 @@ class ComunicacionSeeder extends Seeder
             $pruebaId = DB::table('pruebas')->insertGetId([
                 'codigo' => $json['prueba']['codigo'],
                 'nombre' => $json['prueba']['nombre'],
-                'descripcion' => $json['prueba']['descripcion'],
                 'metodo_resultado' => $json['prueba']['metodo_resultado'],
-                'created_at' => now(),
-                'updated_at' => now(),
             ]);
 
             // Dimensiones: código => id
@@ -59,8 +56,6 @@ class ComunicacionSeeder extends Seeder
                     'prueba_id' => $pruebaId,
                     'codigo' => $dim['codigo'],
                     'nombre' => $dim['nombre'],
-                    'created_at' => now(),
-                    'updated_at' => now(),
                 ]);
             }
 
@@ -71,8 +66,6 @@ class ComunicacionSeeder extends Seeder
                     'texto' => $p['texto'],
                     'orden' => $p['orden'],
                     'tipo' => self::TIPO_PREGUNTA_UNICA,
-                    'created_at' => now(),
-                    'updated_at' => now(),
                 ]);
 
                 foreach (['A' => 1, 'B' => 0] as $letra => $puntos) {
@@ -80,16 +73,12 @@ class ComunicacionSeeder extends Seeder
                         'pregunta_id' => $preguntaId,
                         'texto' => $letra,
                         'orden' => $letra === 'A' ? 1 : 2,
-                        'created_at' => now(),
-                        'updated_at' => now(),
                     ]);
 
                     DB::table('opcion_dimension')->insert([
                         'opcion_id' => $opcionId,
                         'dimension_id' => $dimensionId[$p['dimension']],
                         'puntos' => $puntos,
-                        'created_at' => now(),
-                        'updated_at' => now(),
                     ]);
                 }
             }
@@ -102,8 +91,6 @@ class ComunicacionSeeder extends Seeder
                     'codigo' => $perfil['codigo'],
                     'nombre' => $perfil['nombre'],
                     'interpretacion' => $perfil['interpretacion'],
-                    'created_at' => now(),
-                    'updated_at' => now(),
                 ]);
             }
         });
