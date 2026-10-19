@@ -24,7 +24,7 @@ class VerificarComunicacion extends Command
 
     protected $description = 'Verifica el Test de Comunicación contra el caso resuelto de la hoja escaneada (sin persistir datos).';
 
-    /** orden de pregunta (1-30) => letra marcada en la hoja */
+    /** numero de pregunta (1-30) => letra marcada en la hoja */
     private const RESPUESTAS = [
         1 => 'A', 2 => 'B', 3 => 'A', 4 => 'A', 5 => 'A',
         6 => 'B', 7 => 'B', 8 => 'A', 9 => 'A', 10 => 'B',
@@ -58,24 +58,32 @@ class VerificarComunicacion extends Command
                 return self::FAILURE;
             }
 
+            $usuarioId = DB::table('users')->value('id');
+
+            if (! $usuarioId) {
+                $this->error('No hay ningún usuario en la tabla users para usar como asignada_por.');
+                DB::rollBack();
+
+                return self::FAILURE;
+            }
+
             $asignacionId = DB::table('asignaciones_prueba')->insertGetId([
                 'postulacion_id' => $postulacionId,
                 'prueba_id' => $pruebaId,
                 'estado' => 'EN_CURSO',
-                'created_at' => now(),
-                'updated_at' => now(),
+                'asignada_por' => $usuarioId,
             ]);
 
             $preguntas = DB::table('preguntas')
                 ->where('prueba_id', $pruebaId)
-                ->select('id', 'orden')
+                ->select('id', 'numero')
                 ->get();
 
             foreach ($preguntas as $pregunta) {
-                $letra = self::RESPUESTAS[$pregunta->orden] ?? null;
+                $letra = self::RESPUESTAS[$pregunta->numero] ?? null;
 
                 if ($letra === null) {
-                    $this->error("No tengo respuesta registrada para la pregunta orden {$pregunta->orden}.");
+                    $this->error("No tengo respuesta registrada para la pregunta numero {$pregunta->numero}.");
                     $ok = false;
                     continue;
                 }
@@ -89,35 +97,40 @@ class VerificarComunicacion extends Command
                     'asignacion_id' => $asignacionId,
                     'pregunta_id' => $pregunta->id,
                     'opcion_id' => $opcionId,
-                    'created_at' => now(),
-                    'updated_at' => now(),
                 ]);
             }
 
             $resultado = $motor->calcular($asignacionId);
 
-            $puntajes = [];
-            foreach ($resultado->rangoPorDimension ?? [] as $dim) {
-                $puntajes[$dim->codigo] = $dim->bruto;
-            }
-
-            $this->line('Puntajes obtenidos: N=' . ($puntajes['N'] ?? '?')
-                . ' S=' . ($puntajes['S'] ?? '?')
-                . ' R=' . ($puntajes['R'] ?? '?'));
             $this->line('Perfil/resumen: ' . $resultado->resumen);
-
-            $esperado = ['N' => 6, 'S' => 4, 'R' => 5];
-
-            foreach ($esperado as $codigo => $valor) {
-                if (($puntajes[$codigo] ?? null) != $valor) {
-                    $this->error("Esperaba {$codigo}={$valor}, obtuve " . ($puntajes[$codigo] ?? 'null'));
-                    $ok = false;
-                }
-            }
 
             if (! str_contains(mb_strtolower($resultado->resumen ?? ''), 'noble')) {
                 $this->error('Esperaba que el estilo predominante fuera "Noble".');
                 $ok = false;
+            }
+
+            // Verificación independiente: recalculamos N/S/R directo desde la
+            // base de datos (sin pasar por el motor), porque DimensionMayor
+            // no expone los puntajes crudos por dimensión en el resultado.
+            $puntajesReales = DB::table('respuestas as r')
+                ->join('opcion_dimension as od', 'od.opcion_id', '=', 'r.opcion_id')
+                ->join('dimensiones as d', 'd.id', '=', 'od.dimension_id')
+                ->where('r.asignacion_id', $asignacionId)
+                ->groupBy('d.codigo')
+                ->selectRaw('d.codigo as codigo, SUM(od.puntos) as total')
+                ->pluck('total', 'codigo');
+
+            $this->line('Puntajes reales (calculados directo de la BD): N='
+                . ($puntajesReales['N'] ?? '?') . ' S=' . ($puntajesReales['S'] ?? '?')
+                . ' R=' . ($puntajesReales['R'] ?? '?'));
+
+            $esperado = ['N' => 6, 'S' => 4, 'R' => 5];
+
+            foreach ($esperado as $codigo => $valor) {
+                if ((int) ($puntajesReales[$codigo] ?? -1) !== $valor) {
+                    $this->error("Esperaba {$codigo}={$valor}, obtuve " . ($puntajesReales[$codigo] ?? 'null'));
+                    $ok = false;
+                }
             }
 
             if ($ok) {

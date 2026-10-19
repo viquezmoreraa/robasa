@@ -17,6 +17,7 @@ class DatabaseSeeder extends Seeder
 
         $this->call(BigFiveSeeder::class);
         $this->call(ComunicacionSeeder::class);
+        $this->call(EscuchaActivaSeeder::class);
 
         // Pruebas que se responden subiendo un archivo
         foreach ([
