@@ -5,24 +5,6 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
-/**
- * Siembra la prueba "Test de Estilos de Comunicación" (Noble / Socrático / Reflexivo).
- *
- * No agrega ninguna estrategia nueva: esta prueba usa exactamente el mismo
- * mecanismo que DimensionMayor (la dimensión con más puntos gana) que ya
- * está implementado y probado desde el motor original. Aquí solo se cargan
- * datos: 1 prueba, 3 dimensiones, 30 preguntas (2 opciones A/B cada una) y
- * 3 perfiles (uno por dimensión).
- *
- * Idempotente: si ya existe una prueba con este código, borra sus datos
- * (preguntas, opciones, opcion_dimension, dimensiones, perfiles) antes de
- * volver a insertarlos, igual que BigFiveSeeder y DiscSeeder.
- *
- * Columnas según las migraciones: preguntas usa `numero` y `enunciado`
- * (tipo OPCION_UNICA), y perfiles guarda el texto en `texto_interpretacion`.
- * El código de cada perfil es el de su dimensión (N, S, R): así lo busca
- * DimensionMayor. Como el JSON no trae instrucciones, se usa la descripción.
- */
 class ComunicacionSeeder extends Seeder
 {
     private const TIPO_PREGUNTA_UNICA = 'OPCION_UNICA';
@@ -41,20 +23,20 @@ class ComunicacionSeeder extends Seeder
 
             $pruebaId = DB::table('pruebas')->insertGetId([
                 'codigo' => $json['prueba']['codigo'],
-                'version' => $json['prueba']['version'],
                 'nombre' => $json['prueba']['nombre'],
-                'instrucciones' => $json['prueba']['instrucciones'] ?? $json['prueba']['descripcion'],
                 'metodo_resultado' => $json['prueba']['metodo_resultado'],
+                'version' => '1.0',
+                'instrucciones' => $json['prueba']['descripcion'],
+                'estado' => 'APROBADA',
             ]);
 
             // Dimensiones: código => id
             $dimensionId = [];
-            foreach ($json['dimensiones'] as $i => $dim) {
+            foreach ($json['dimensiones'] as $dim) {
                 $dimensionId[$dim['codigo']] = DB::table('dimensiones')->insertGetId([
                     'prueba_id' => $pruebaId,
                     'codigo' => $dim['codigo'],
                     'nombre' => $dim['nombre'],
-                    'orden' => $i + 1,
                 ]);
             }
 
@@ -62,8 +44,8 @@ class ComunicacionSeeder extends Seeder
             foreach ($json['preguntas'] as $p) {
                 $preguntaId = DB::table('preguntas')->insertGetId([
                     'prueba_id' => $pruebaId,
-                    'numero' => $p['orden'],
                     'enunciado' => $p['texto'],
+                    'numero' => $p['orden'],
                     'tipo' => self::TIPO_PREGUNTA_UNICA,
                 ]);
 
@@ -82,7 +64,9 @@ class ComunicacionSeeder extends Seeder
                 }
             }
 
-            // Perfiles (uno por dimensión; DimensionMayor los busca por el código de la dimensión)
+            // Perfiles (perfiles.codigo == dimensiones.codigo es lo que usa
+            // DimensionMayor para encontrar el perfil de la dimensión ganadora;
+            // la tabla perfiles no tiene dimension_id).
             foreach ($json['perfiles'] as $perfil) {
                 DB::table('perfiles')->insert([
                     'prueba_id' => $pruebaId,

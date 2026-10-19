@@ -1,0 +1,58 @@
+{
+  "prueba": {
+    "codigo": "ESCUCHA_ACTIVA",
+    "nombre": "Test de Escucha Activa",
+    "descripcion": "Autoevaluación de 20 afirmaciones (Sí/No) que mide 4 dimensiones de la escucha activa, 5 ítems por dimensión.",
+    "metodo_resultado": "PUNTAJE_POR_DIMENSION"
+  },
+  "dimensiones": [
+    { "codigo": "E", "nombre": "Escuchar sin interrumpir" },
+    { "codigo": "F", "nombre": "Escuchar prestando 100% de atención" },
+    { "codigo": "G", "nombre": "Escuchar más allá de las palabras" },
+    { "codigo": "H", "nombre": "Escuchar incentivando al otro a profundizar" }
+  ],
+  "preguntas": [
+    { "orden": 1,  "dimension": "E", "bueno": "No", "texto": "Si me doy cuenta de lo que el otro está por preguntar, me anticipo y le contesto directamente, para ahorrar tiempo." },
+    { "orden": 2,  "dimension": "F", "bueno": "No", "texto": "Mientras escucho a otra persona, me adelanto en el tiempo y me pongo a pensar en lo que le voy a responder." },
+    { "orden": 3,  "dimension": "G", "bueno": "No", "texto": "En general procuro centrarme en que está diciendo el otro, sin considerar cómo lo está diciendo." },
+    { "orden": 4,  "dimension": "H", "bueno": "Sí", "texto": "Mientras estoy escuchando, digo cosas como \"Ajá!, Hum… Entiendo…\" para hacerle saber a la otra persona que le estoy prestando atención." },
+    { "orden": 5,  "dimension": "E", "bueno": "No", "texto": "Creo que a la mayoría de las personas no le importa que las interrumpa… siempre que las ayude en sus problemas." },
+    { "orden": 6,  "dimension": "F", "bueno": "No", "texto": "Cuando escucho a algunas personas, mentalmente me pregunto ¿Por qué les resultará tan difícil ir directamente al grano?" },
+    { "orden": 7,  "dimension": "G", "bueno": "No", "texto": "Cuando una persona está realmente enojada y expresa su molestia, yo simplemente dejo que lo que dice \"me entre por un oído y me salga por el otro\"." },
+    { "orden": 8,  "dimension": "H", "bueno": "Sí", "texto": "Si no comprendo lo que una persona está diciendo, hago las preguntas necesarias hasta entenderla." },
+    { "orden": 9,  "dimension": "E", "bueno": "No", "texto": "Solamente discuto con una persona cuando sé positivamente que estoy en lo cierto." },
+    { "orden": 10, "dimension": "F", "bueno": "No", "texto": "Dado que he escuchado las mismas quejas y protestas infinidad de veces, generalmente me dedico mentalmente a otra cosa mientras escucho." },
+    { "orden": 11, "dimension": "G", "bueno": "Sí", "texto": "El tono de la voz de una persona me dice, generalmente, mucho más que las palabras mismas." },
+    { "orden": 12, "dimension": "H", "bueno": "Sí", "texto": "Si una persona tiene dificultades en decirme algo, generalmente le ayudo a expresarse." },
+    { "orden": 13, "dimension": "E", "bueno": "No", "texto": "Si no interrumpiera a las personas de vez en cuando, ellas terminarían hablándome durante horas." },
+    { "orden": 14, "dimension": "F", "bueno": "No", "texto": "Cuando una persona me dice tantas cosas juntas que siento superada mi capacidad para retenerlas, trato de poner mi mente en otra cosa para no alterarme…" },
+    { "orden": 15, "dimension": "G", "bueno": "Sí", "texto": "Si una persona está muy enojada, lo mejor que puedo hacer es escucharla hasta que descargue toda la presión." },
+    { "orden": 16, "dimension": "H", "bueno": "No", "texto": "Si entiendo lo que una persona me acaba de decir, me parece redundante volver a preguntar para verificar." },
+    { "orden": 17, "dimension": "E", "bueno": "No", "texto": "Cuando una persona está equivocada acerca de algún punto de su problema, es importante interrumpirla y hacer que replantee este punto de manera correcta." },
+    { "orden": 18, "dimension": "F", "bueno": "No", "texto": "Cuando he tenido un contacto negativo con una persona (discusión, pelea…), no puedo evitar seguir pensando en ese episodio… aún después de haber iniciado un contacto con otra persona." },
+    { "orden": 19, "dimension": "G", "bueno": "Sí", "texto": "Cuando le respondo a las personas, lo hago en función de la manera en que percibo cómo ellas se sienten." },
+    { "orden": 20, "dimension": "H", "bueno": "No", "texto": "Si una persona no puede decirme exactamente que quiere de mí, no hay nada que yo puedo hacer." }
+  ],
+    "rangos": [
+    { "dimension": "E", "min": 5, "max": 5, "nivel": "ALTO",  "interpretacion": "Ud sabe escuchar sin interrumpir. Su paciencia le permitirá generar muy buenas relaciones." },
+    { "dimension": "E", "min": 3, "max": 4, "nivel": "MEDIO", "interpretacion": "A veces Ud. se pone a hablar encima de la otra persona... Si Ud. permitiera que las personas terminen antes de comenzar a hablar, sus contactos con ellas serán más simples y satisfactorios." },
+    { "dimension": "E", "min": 0, "max": 2, "nivel": "BAJO",  "interpretacion": "Ud. parece estar tan ansioso por hablar que no puede escuchar... ¿Cómo puede relacionarse con las personas si no las escucha?" },
+
+    { "dimension": "F", "min": 5, "max": 5, "nivel": "ALTO",  "interpretacion": "Ud. tiene la disciplina y serenidad para prestar a las personas la atención que merecen. Esto le permitirá desarrollar excelentes relaciones interpersonales. ¡Felicitaciones!" },
+    { "dimension": "F", "min": 3, "max": 4, "nivel": "MEDIO", "interpretacion": "Si lograra no desconcentrarse, Ud lograría contactos personales más duraderos y satisfactorios." },
+    { "dimension": "F", "min": 0, "max": 2, "nivel": "BAJO",  "interpretacion": "Seguramente Ud. con frecuencia se encuentra diciendo... ¿Qué? ¿Cómo? ¿Qué dijo? Reconozca que entender a las personas requiere el 100% de su atención...!!!" },
+
+    { "dimension": "G", "min": 5, "max": 5, "nivel": "ALTO",  "interpretacion": "Ud. es un oyente empático... logra percibir cómo se sienten las personas con que habla... Ud. tiene la capacidad para entender y ayudar a las personas..." },
+    { "dimension": "G", "min": 3, "max": 4, "nivel": "MEDIO", "interpretacion": "Ud. se da cuenta de cómo se sienten las personas... pero le da más peso al mensaje explícito..." },
+    { "dimension": "G", "min": 0, "max": 2, "nivel": "BAJO",  "interpretacion": "Ud. no parece darse cuenta de cómo se sienten las personas con que habla." },
+
+    { "dimension": "H", "min": 5, "max": 5, "nivel": "ALTO",  "interpretacion": "Ud. hace todo lo necesario para que la otra persona se pueda expresar... Ud. logrará contactos muy satisfactorios...." },
+    { "dimension": "H", "min": 3, "max": 4, "nivel": "MEDIO", "interpretacion": "Ud. es un oyente activo... pero no está haciendo todo lo posible..." },
+    { "dimension": "H", "min": 0, "max": 2, "nivel": "BAJO",  "interpretacion": "Ud parece no querer involucrarse demasiado en sus contactos..." }
+  ],
+  "observaciones": [
+    "Regla de puntaje tomada tal cual del documento 'Calificación de Test Escucha activa': dimensión 1 (ítems 1,5,9,13,17, 1pto/NO), dimensión 2 (ítems 2,6,10,14,18, 1pto/NO), dimensión 3 (ítems 3,7 1pto/NO; 11,15,19 1pto/SI), dimensión 4 (ítems 4,8,12 1pto/SI; 16,20 1pto/NO). Las 4 dimensiones quedan parejas: 5 ítems y 5 puntos máximo cada una.",
+    "El caso de la hoja escaneada (EA.pdf / hoja 'Test de escucha' del Excel) da, con esta regla oficial: E=3, F=4, G=5, H=2. El total de G que traía escrito a mano esa hoja de ejemplo era 4 (no 5): es un error de conteo manual de quien llenó el ejemplo, no un error de la regla - se usa la regla del documento oficial.",
+    "Los perfiles usan 3 bandas por dimensión (5 puntos / 3-4 puntos / 0-2 puntos) con el texto exacto del documento de calificación."
+  ]
+}
