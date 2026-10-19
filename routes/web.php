@@ -15,15 +15,14 @@ Route::get('/', function () {
     ValidateCsrfToken::class,
 ]);
 
-// El formulario de crear-cuenta.html es HTML estático (sin token CSRF)
-Route::post('/postulaciones', [PostulacionController::class, 'store'])
-    ->withoutMiddleware(ValidateCsrfToken::class)
-    ->name('postulaciones.store');
-
 Route::middleware('guest')->group(function () {
     Route::get('/login', [AuthController::class, 'form'])->name('login');
     Route::get('/admin/login', [AuthController::class, 'form'])->name('admin.login');
     Route::post('/login', [AuthController::class, 'login'])->name('login.store');
+
+    // Registro: último paso del formulario de postulación (única forma de crear cuentas)
+    Route::get('/crear-cuenta', [PostulacionController::class, 'create'])->name('postulaciones.create');
+    Route::post('/postulaciones', [PostulacionController::class, 'store'])->name('postulaciones.store');
 });
 
 Route::middleware('auth')->group(function () {

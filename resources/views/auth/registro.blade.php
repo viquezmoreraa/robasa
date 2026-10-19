@@ -166,6 +166,18 @@
             margin-top: 0.3rem;
         }
 
+        .errores {
+            margin-bottom: 1.25rem;
+            padding: 0.75rem 1rem;
+            background: rgba(231, 76, 60, 0.15);
+            border: 1px solid rgba(231, 76, 60, 0.4);
+            border-radius: 0.65rem;
+            color: #ffb3aa;
+            font-size: 0.85rem;
+        }
+
+        .errores ul { padding-left: 1.1rem; }
+
         .btn-submit {
             display: block;
             width: 100%;
@@ -219,19 +231,42 @@
             <div class="subtitle">Cree una contraseña segura para acceder a su perfil en el futuro.</div>
         </div>
 
-        <!-- Envía el formulario completo a la pantalla de éxito -->
-        <form action="/postulaciones" method="POST" id="cuentaForm">
+        {{-- Crea la cuenta y la postulación; al terminar redirige a exito.html --}}
+        <form action="{{ route('postulaciones.store') }}" method="POST" id="cuentaForm">
+            @csrf
             <div id="hiddenContainer"></div>
+
+            @if ($errors->any())
+                <div class="errores" role="alert">
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
+
+            <div class="form-group">
+                <label for="username">Nombre de usuario *</label>
+                <input type="text" id="username" name="username" value="{{ old('username') }}" placeholder="Ej. ana_perez" minlength="4" maxlength="30" autocomplete="username" required>
+                <div class="hint">De 4 a 30 caracteres: letras, números, guion o guion bajo. Podrá usarlo para iniciar sesión.</div>
+            </div>
 
             <div class="form-group">
                 <label for="nuevo_correo">Correo electrónico para su cuenta *</label>
-                <input type="email" id="nuevo_correo" name="nuevo_correo" placeholder="Ej. su.correo@gmail.com" required>
+                <input type="email" id="nuevo_correo" name="nuevo_correo" value="{{ old('nuevo_correo') }}" placeholder="Ej. su.correo@gmail.com" maxlength="150" autocomplete="email" required>
+                <div class="hint">Se aceptan correos de Gmail, Hotmail, Outlook, Yahoo o iCloud.</div>
             </div>
 
             <div class="form-group">
                 <label for="password">Contraseña segura *</label>
-                <input type="password" id="password" name="password" placeholder="Mínimo 8 caracteres, números y letras" minlength="8" required>
+                <input type="password" id="password" name="password" placeholder="Mínimo 8 caracteres, números y letras" minlength="8" autocomplete="new-password" required>
                 <div class="hint">Use al menos 8 caracteres combinando letras y números.</div>
+            </div>
+
+            <div class="form-group">
+                <label for="password_confirmation">Confirme la contraseña *</label>
+                <input type="password" id="password_confirmation" name="password_confirmation" minlength="8" autocomplete="new-password" required>
             </div>
 
             <button type="submit" class="btn-submit">Enviar formulario</button>
@@ -256,6 +291,5 @@
         document.getElementById('backLinkTop').href = `empleos-anteriores.html?${queryString}`;
         document.getElementById('backLinkBottom').href = `empleos-anteriores.html?${queryString}`;
     </script>
-    <script src="js/backend.js"></script>
 </body>
 </html>

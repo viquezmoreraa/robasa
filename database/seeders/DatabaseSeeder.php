@@ -5,17 +5,20 @@ namespace Database\Seeders;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 
 class DatabaseSeeder extends Seeder
 {
     public function run(): void
     {
+        // Cuenta interna del contratista: el registro público solo crea postulantes
         User::updateOrCreate(
             ['email' => 'jose@robasa.com'],
-            ['name' => 'Jose', 'password' => 'Jose2026', 'rol' => 'contratista']
+            ['name' => 'Jose', 'username' => 'jose', 'password' => Hash::make('Jose2026'), 'rol' => 'contratista']
         );
 
         $this->call(BigFiveSeeder::class);
+        $this->call(ComunicacionSeeder::class);
 
         // Pruebas que se responden subiendo un archivo
         foreach ([

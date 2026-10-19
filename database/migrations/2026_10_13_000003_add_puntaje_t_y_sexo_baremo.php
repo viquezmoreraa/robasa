@@ -2,16 +2,16 @@
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
     public function up(): void
     {
-        // Nuevo método de resultado: PUNTAJE_T (MySQL)
-        DB::statement("ALTER TABLE pruebas MODIFY metodo_resultado
-            ENUM('DIMENSION_MAYOR','PUNTAJE_POR_DIMENSION','COMBINACION','TOTAL_CORRECTAS','PUNTAJE_T') NOT NULL");
+        // Nuevo método de resultado: PUNTAJE_T (->change() funciona en MySQL y en SQLite)
+        Schema::table('pruebas', function (Blueprint $table) {
+            $table->enum('metodo_resultado', ['DIMENSION_MAYOR', 'PUNTAJE_POR_DIMENSION', 'COMBINACION', 'TOTAL_CORRECTAS', 'PUNTAJE_T'])->change();
+        });
 
         // Sexo con el que se aplica el baremo; se copia del candidato al asignar la prueba.
         // Es un valor controlado (H o M), nunca texto libre.
@@ -35,7 +35,8 @@ return new class extends Migration
         });
 
         // Falla si ya hay pruebas con PUNTAJE_T; en ese caso, bórrenlas antes.
-        DB::statement("ALTER TABLE pruebas MODIFY metodo_resultado
-            ENUM('DIMENSION_MAYOR','PUNTAJE_POR_DIMENSION','COMBINACION','TOTAL_CORRECTAS') NOT NULL");
+        Schema::table('pruebas', function (Blueprint $table) {
+            $table->enum('metodo_resultado', ['DIMENSION_MAYOR', 'PUNTAJE_POR_DIMENSION', 'COMBINACION', 'TOTAL_CORRECTAS'])->change();
+        });
     }
 };

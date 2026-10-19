@@ -4,6 +4,7 @@ namespace Tests\Unit\Psicometria;
 
 use App\Services\Psicometria\Estrategias\PatronDisc;
 use App\Services\Psicometria\ResultadoDimension;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
 /** Datos inventados y mínimos; no usan la base de datos. */
@@ -53,7 +54,7 @@ class PatronDiscTest extends TestCase
         $this->assertStringContainsString('sin perfil asignado', $r->resumen);
     }
 
-    /** @dataProvider fronteras */
+    #[DataProvider('fronteras')]
     public function test_las_posiciones_no_dejan_huecos_en_los_bordes(int $d, int $i, int $s, int $c, string $codigoEsperado): void
     {
         $estrategia = new PatronDisc([$codigoEsperado => '1']);
