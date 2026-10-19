@@ -1,0 +1,71 @@
+{
+  "prueba": {
+    "codigo": "COMUNICACION",
+    "nombre": "Test de Estilos de Comunicación",
+    "descripcion": "Cuestionario de 30 afirmaciones (A/B forzado) que determina el estilo de comunicación predominante entre tres: Noble, Socrático y Reflexivo.",
+    "metodo_resultado": "DIMENSION_MAYOR"
+  },
+  "dimensiones": [
+    { "codigo": "N", "nombre": "Noble" },
+    { "codigo": "S", "nombre": "Socrático" },
+    { "codigo": "R", "nombre": "Reflexivo" }
+  ],
+  "preguntas": [
+    { "orden": 1,  "dimension": "N", "texto": "Soy directo, franco y espontáneo cuando hablo." },
+    { "orden": 2,  "dimension": "N", "texto": "No le digo a otros acerca de mis sentimientos personales." },
+    { "orden": 3,  "dimension": "N", "texto": "Tiendo a evadir discusiones largas que involucran muchos detalles." },
+    { "orden": 4,  "dimension": "N", "texto": "Tiendo a decir lo que tengo que decir en tan pocas palabras como sea posible." },
+    { "orden": 5,  "dimension": "N", "texto": "Hay una forma correcta y una forma incorrecta de hacer la mayoría de las cosas." },
+    { "orden": 6,  "dimension": "N", "texto": "Tiendo a ser impaciente cuando escucho a otros." },
+    { "orden": 7,  "dimension": "N", "texto": "Interrumpo a las personas que tienden a hablar demasiado." },
+    { "orden": 8,  "dimension": "N", "texto": "La primera cosa que pienso es usualmente lo que voy a decir." },
+    { "orden": 9,  "dimension": "N", "texto": "Si creo que un amigo está cometiendo un error, le digo lo que pienso." },
+    { "orden": 10, "dimension": "N", "texto": "Me irrito con la gente que no es decidida." },
+
+    { "orden": 11, "dimension": "S", "texto": "Creo que las palabras son muy importantes y disfruto utilizándolas." },
+    { "orden": 12, "dimension": "S", "texto": "Disfruto debatiendo y discutiendo diferentes temas." },
+    { "orden": 13, "dimension": "S", "texto": "Soy muy preciso y detallado cuando le digo a alguien cómo hacer algo." },
+    { "orden": 14, "dimension": "S", "texto": "Algunas veces parece que la gente se desconecta cuando estoy hablando." },
+    { "orden": 15, "dimension": "S", "texto": "Tengo habilidad excelente para recordar detalles." },
+    { "orden": 16, "dimension": "S", "texto": "Tiendo a explicar las cosas usando historias anecdóticas y ejemplos hipotéticos." },
+    { "orden": 17, "dimension": "S", "texto": "Tiendo a hacer afirmaciones condicionales y deductivas; Si sucede “X” cosas entonces..." },
+    { "orden": 18, "dimension": "S", "texto": "Me irrito con la gente que toma decisiones rápidas sin analizar todos los detalles." },
+    { "orden": 19, "dimension": "S", "texto": "Tiendo a usar muchos adjetivos descriptivos en mi comunicación oral y escrita." },
+    { "orden": 20, "dimension": "S", "texto": "Algunas veces me culpan de ser redundante." },
+
+    { "orden": 21, "dimension": "R", "texto": "Comparto mis sentimientos personales con otros." },
+    { "orden": 22, "dimension": "R", "texto": "A menudo me siento frustrado porque realmente no digo lo que siento." },
+    { "orden": 23, "dimension": "R", "texto": "Me gusta reflexionar sobre las cosas antes de tomar una decisión definitiva." },
+    { "orden": 24, "dimension": "R", "texto": "Me río de un chiste sin gracia para hacer que quien lo cuenta se sienta mejor." },
+    { "orden": 25, "dimension": "R", "texto": "Tengo muy buenas ideas, pero mis sugerencias son a menudo ignoradas." },
+    { "orden": 26, "dimension": "R", "texto": "No le respondo a una persona que está enojada." },
+    { "orden": 27, "dimension": "R", "texto": "Tiendo a ser una persona muy paciente." },
+    { "orden": 28, "dimension": "R", "texto": "Usualmente soy una persona suave de hablar." },
+    { "orden": 29, "dimension": "R", "texto": "Tiendo a conceder más que otra gente, y esto me molesta algunas veces." },
+    { "orden": 30, "dimension": "R", "texto": "Otras personas tienden a decirme sus problemas." }
+  ],
+  "perfiles": [
+    {
+      "codigo": "N",
+      "dimension": "N",
+      "nombre": "El Noble",
+      "interpretacion": "Es el más fácil de identificar de todos los comunicadores. Usa el menor número de palabras para decir lo que necesita decir y espera que usted haga lo mismo: si no puede decirlo en diez palabras o menos, mejor no diga nada. Es directo, franco y espontáneo; va al grano y se impacienta con los rodeos o el exceso de detalle."
+    },
+    {
+      "codigo": "S",
+      "dimension": "S",
+      "nombre": "El Socrático",
+      "interpretacion": "No desea ofender y cree verdaderamente en el valor de la comunicación. Le gusta discutir, argumentar y analizar cada punto en detalle; disfruta la negociación y el arbitraje. Para un Socrático, el tiempo que se gasta en comunicarse es tiempo bien utilizado."
+    },
+    {
+      "codigo": "R",
+      "dimension": "R",
+      "nombre": "El Reflexivo",
+      "interpretacion": "Para el Reflexivo, la exactitud de la información y la expresión de las opiniones juegan un rol secundario frente a la relación interpersonal; a veces prefiere callar u omitir algo antes que decir algo que desagrade a la otra persona. Suele ser una persona callada y suave al hablar, que piensa que el propósito principal de la conversación es cuidar el vínculo con el otro."
+    }
+  ],
+  "observaciones": [
+    "La hoja original (foto escaneada) trae las 30 respuestas marcadas (A/B) pero deja en blanco los totales N/S/R: se calcularon a mano a partir de las marcas para armar el caso de verificación -> N=6, S=4, R=5 (Noble predominante, sin empate).",
+    "El documento de calificación no define una regla explícita de desempate (ej. dos puntajes altos iguales); el motor ya resuelve esto de forma genérica marcando 'empate' en el resultado, igual que en las pruebas anteriores, en vez de inventar un criterio no documentado."
+  ]
+}
