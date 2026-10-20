@@ -9,6 +9,7 @@ use App\Services\Psicometria\Estrategias\PatronDisc;
 use App\Services\Psicometria\Estrategias\PuntajePorDimension;
 use App\Services\Psicometria\Estrategias\PuntajeT;
 use App\Services\Psicometria\Estrategias\TotalCorrectas;
+use App\Services\Psicometria\Estrategias\DicotomiaCombinada;
 use DomainException;
 use Illuminate\Support\Facades\DB;
 
@@ -129,6 +130,7 @@ final class MotorPsicometrico
             'TOTAL_CORRECTAS'       => new TotalCorrectas(),
             'PUNTAJE_T'             => new PuntajeT($this->cargarBaremos($pruebaId, $sexo)),
             'PATRON_DISC'           => new PatronDisc($this->cargarClasificacionDisc($pruebaId)),
+            'DICOTOMIA_COMBINADA' => new DicotomiaCombinada(),
             default => throw new DomainException("Método de resultado desconocido: {$metodo}"),
         };
     }
