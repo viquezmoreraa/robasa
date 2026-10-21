@@ -31,7 +31,7 @@
             <p>Aún no se le ha enviado ninguna prueba.</p>
         @else
             <table>
-                <thead><tr><th>Prueba</th><th>Intento</th><th>Asignada</th><th>Estado</th><th>Entrega</th></tr></thead>
+                <thead><tr><th>Prueba</th><th>Intento</th><th>Asignada</th><th>Estado</th><th>Finalizada</th></tr></thead>
                 <tbody>
                     @foreach ($postulacion->asignaciones as $a)
                         <tr>
@@ -43,14 +43,7 @@
                                     {{ $a->completada() ? '✓ Completada' : ucfirst(strtolower($a->estado)) }}
                                 </span>
                             </td>
-                            <td>
-                                @if ($a->archivo_path)
-                                    <a href="{{ route('contratista.archivo', $a) }}">Descargar archivo</a>
-                                @endif
-                                @if ($a->respuesta_texto)
-                                    <div style="font-size: .85rem; color: #c9d6ea; margin-top: 4px;">{{ $a->respuesta_texto }}</div>
-                                @endif
-                            </td>
+                            <td>{{ $a->fecha_fin?->format('d/m/Y H:i') ?? '—' }}</td>
                         </tr>
                     @endforeach
                 </tbody>

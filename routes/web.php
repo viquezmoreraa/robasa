@@ -29,12 +29,11 @@ Route::middleware('auth')->group(function () {
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
     Route::get('/postulante', [PostulanteController::class, 'index'])->name('postulante.index');
-    Route::post('/postulante/tareas/{asignacion}', [PostulanteController::class, 'entregar'])->name('postulante.entregar');
+    Route::get('/postulante/tareas/{asignacion}', [PostulanteController::class, 'formulario'])->name('postulante.formulario');
 
     Route::middleware('contratista')->prefix('contratista')->name('contratista.')->group(function () {
         Route::get('/', [ContratistaController::class, 'index'])->name('index');
         Route::get('/postulaciones/{postulacion}', [ContratistaController::class, 'show'])->name('show');
         Route::post('/postulaciones/{postulacion}/asignar', [ContratistaController::class, 'asignar'])->name('asignar');
-        Route::get('/asignaciones/{asignacion}/archivo', [ContratistaController::class, 'archivo'])->name('archivo');
     });
 });

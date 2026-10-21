@@ -2,11 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\AsignacionPrueba;
 use App\Models\Postulacion;
 use App\Models\Prueba;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
 
 class ContratistaController extends Controller
 {
@@ -43,12 +41,5 @@ class ContratistaController extends Controller
         ]);
 
         return back()->with('ok', 'Prueba enviada al postulante.');
-    }
-
-    public function archivo(AsignacionPrueba $asignacion)
-    {
-        abort_unless($asignacion->archivo_path && Storage::exists($asignacion->archivo_path), 404);
-
-        return Storage::download($asignacion->archivo_path);
     }
 }
