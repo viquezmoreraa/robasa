@@ -73,7 +73,10 @@ final class MotorPsicometrico
             ->where('p.obligatoria', true)
             ->select('p.id', 'p.tipo')
             ->groupBy('p.id', 'p.tipo')
-            ->havingRaw("COUNT(r.id) < IF(p.tipo = 'MAS_MENOS', 2, 1)")
+            // CASE WHEN en vez de IF(...): IF() es solo MySQL y rompía esto bajo
+            // SQLite (BD de phpunit). CASE WHEN es SQL estándar y funciona igual
+            // en ambos motores.
+            ->havingRaw("COUNT(r.id) < CASE WHEN p.tipo = 'MAS_MENOS' THEN 2 ELSE 1 END")
             ->count();
 
         if ($faltantes > 0) {
@@ -84,7 +87,13 @@ final class MotorPsicometrico
     /** @return ResultadoDimension[] */
     private function detalle(int $asignacionId, int $pruebaId): array
     {
-        $dimensiones = DB::table('dimensiones')->where('prueba_id', $pruebaId)->orderBy('orden')->get();
+        // orderBy('id') como segundo criterio: 'orden' no es único entre sí (p. ej.
+        // Keirsey deja el default en todas las filas), y sin un segundo criterio
+        // el orden de los empates no está garantizado — MySQL y SQLite pueden
+        // devolverlos distinto (esto se detectó corriendo este mismo cálculo bajo
+        // SQLite en los tests). orderBy('id') reproduce el orden de inserción,
+        // que es el que las estrategias como DicotomiaCombinada necesitan.
+        $dimensiones = DB::table('dimensiones')->where('prueba_id', $pruebaId)->orderBy('orden')->orderBy('id')->get();
 
         // Puntaje neto por dimensión: una respuesta 'MENOS' resta en vez de sumar.
         // Para UNICA (y ESCALA) el signo siempre es +1, igual que antes.
@@ -92,7 +101,8 @@ final class MotorPsicometrico
             ->join('opcion_dimension as od', 'od.opcion_id', '=', 'r.opcion_id')
             ->where('r.asignacion_id', $asignacionId)
             ->groupBy('od.dimension_id')
-            ->selectRaw("od.dimension_id, SUM(od.puntos * IF(r.seleccion = 'MENOS', -1, 1)) as bruto")
+            // CASE WHEN en vez de IF(...): igual que arriba, IF() es solo MySQL.
+            ->selectRaw("od.dimension_id, SUM(od.puntos * CASE WHEN r.seleccion = 'MENOS' THEN -1 ELSE 1 END) as bruto")
             ->pluck('bruto', 'dimension_id');
 
         // Máximo posible = suma, por pregunta, del mayor puntaje que alimenta la dimensión.
@@ -192,9 +202,12 @@ final class MotorPsicometrico
                 'calculado_en'   => now(),
             ]], ['asignacion_id'], ['perfil_id', 'resumen', 'interpretacion', 'version_motor', 'calculado_en']);
 
+            // COALESCE(fecha_fin, NOW()) solo existe en MySQL; se resuelve en PHP
+            // para que calcular() también funcione bajo SQLite (BD de phpunit).
+            $fechaFinActual = DB::table('asignaciones_prueba')->where('id', $asignacionId)->value('fecha_fin');
             DB::table('asignaciones_prueba')->where('id', $asignacionId)->update([
                 'estado'    => 'COMPLETADA',
-                'fecha_fin' => DB::raw('COALESCE(fecha_fin, NOW())'),
+                'fecha_fin' => $fechaFinActual ?? now(),
             ]);
         });
     }

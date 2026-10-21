@@ -39,6 +39,10 @@
 
                     @if ($t->completada())
                         <span class="badge badge-ok">Entregada el {{ $t->fecha_fin?->format('d/m/Y H:i') }}</span>
+                    @elseif ($t->prueba->tienePreguntas())
+                        <a class="btn" href="{{ route('postulante.prueba.show', $t) }}">
+                            {{ $t->estado === 'EN_CURSO' ? 'Continuar prueba' : 'Responder prueba' }}
+                        </a>
                     @else
                         <form method="POST" action="{{ route('postulante.entregar', $t) }}" enctype="multipart/form-data">
                             @csrf

@@ -31,6 +31,11 @@ Route::middleware('auth')->group(function () {
     Route::get('/postulante', [PostulanteController::class, 'index'])->name('postulante.index');
     Route::post('/postulante/tareas/{asignacion}', [PostulanteController::class, 'entregar'])->name('postulante.entregar');
 
+    // Pruebas psicométricas digitalizadas: se responden pregunta por pregunta
+    // (no subiendo archivo) y disparan MotorPsicometrico::calcular().
+    Route::get('/postulante/pruebas/{asignacion}', [PostulanteController::class, 'mostrarPrueba'])->name('postulante.prueba.show');
+    Route::post('/postulante/pruebas/{asignacion}', [PostulanteController::class, 'guardarPrueba'])->name('postulante.prueba.guardar');
+
     Route::middleware('contratista')->prefix('contratista')->name('contratista.')->group(function () {
         Route::get('/', [ContratistaController::class, 'index'])->name('index');
         Route::get('/postulaciones/{postulacion}', [ContratistaController::class, 'show'])->name('show');

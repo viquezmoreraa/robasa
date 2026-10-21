@@ -50,6 +50,31 @@
                                 @if ($a->respuesta_texto)
                                     <div style="font-size: .85rem; color: #c9d6ea; margin-top: 4px;">{{ $a->respuesta_texto }}</div>
                                 @endif
+                                @if ($resultados->has($a->id))
+                                    @php $r = $resultados->get($a->id); @endphp
+                                    <div style="margin-top: 8px; padding-top: 8px; border-top: 1px solid rgba(255,255,255,.1);">
+                                        <strong>{{ $r->resumen }}</strong>
+                                        @if ($r->interpretacion)
+                                            <div style="font-size: .85rem; color: #c9d6ea; margin-top: 4px; white-space: pre-line;">{{ $r->interpretacion }}</div>
+                                        @elseif ($dimensiones->has($a->id))
+                                            <div style="font-size: .85rem; color: #c9d6ea; margin-top: 4px;">
+                                                <em>Sin normas de referencia cargadas para esta prueba; se muestra el puntaje directo por área.</em>
+                                                <table style="margin-top: 6px;">
+                                                    <thead><tr><th>Área</th><th>Puntaje</th><th>%</th></tr></thead>
+                                                    <tbody>
+                                                        @foreach ($dimensiones->get($a->id) as $d)
+                                                            <tr>
+                                                                <td>{{ $d->dimension_nombre }}</td>
+                                                                <td>{{ rtrim(rtrim(number_format((float) $d->puntaje_bruto, 2), '0'), '.') }}{{ $d->puntaje_maximo !== null ? '/' . rtrim(rtrim(number_format((float) $d->puntaje_maximo, 2), '0'), '.') : '' }}</td>
+                                                                <td>{{ $d->porcentaje !== null ? rtrim(rtrim(number_format((float) $d->porcentaje, 2), '0'), '.') . '%' : '—' }}</td>
+                                                            </tr>
+                                                        @endforeach
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        @endif
+                                    </div>
+                                @endif
                             </td>
                         </tr>
                     @endforeach
