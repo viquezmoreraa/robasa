@@ -54,9 +54,9 @@
     "semantic_hash": "cb507030e327d5a82c3c45c4fa303e0f"
   },
   "app/Services/Psicometria/MotorPsicometrico.php": {
-    "mtime": 1792116879.4837224,
-    "seen": 1792431740.4753282,
-    "ast_hash": "81204e7f0cc26d48047ca89a9c898f99",
+    "mtime": 1792590830.6575987,
+    "seen": 1792595669.601051,
+    "ast_hash": "52767f0ef7210f0ef5b976a4b98b5225",
     "semantic_hash": ""
   },
   "app/Services/Psicometria/ResultadoDimension.php": {
@@ -318,9 +318,9 @@
     "semantic_hash": "2af2fedd571a66ee70797fc7d80dffd9"
   },
   "database/seeders/DatabaseSeeder.php": {
-    "mtime": 1792444225.3518007,
-    "seen": 1792444822.6460247,
-    "ast_hash": "9b5186470fa694d1fba4426d6e4618e4",
+    "mtime": 1792595682.1962304,
+    "seen": 1792595956.3156087,
+    "ast_hash": "91f41ef1e853abc182b3b4b582d4b22f",
     "semantic_hash": ""
   },
   "database/tests/Unit/Psicometria/EstrategiasResultadoTest.php": {
@@ -408,9 +408,9 @@
     "semantic_hash": "3c6ce2e6d16444282b24a9aa63885563"
   },
   "routes/web.php": {
-    "mtime": 1792444182.252214,
-    "seen": 1792444822.6460247,
-    "ast_hash": "eb7922b8a2c1ff7a2cebde33d3c223a3",
+    "mtime": 1792595682.2182324,
+    "seen": 1792595956.3156087,
+    "ast_hash": "6e5c2012c3c558382e952680a0b46284",
     "semantic_hash": ""
   },
   "tests/Feature/ExampleTest.php": {
@@ -462,9 +462,9 @@
     "semantic_hash": ""
   },
   "app/Http/Controllers/ContratistaController.php": {
-    "mtime": 1792100143.1463792,
-    "seen": 1792100292.7345927,
-    "ast_hash": "b69cf0481d2df197290efd7ffdc161d0",
+    "mtime": 1792595682.191231,
+    "seen": 1792595956.3156087,
+    "ast_hash": "63fc9139bcc5853cab72f4206b1ef81f",
     "semantic_hash": ""
   },
   "app/Http/Controllers/PostulacionController.php": {
@@ -474,9 +474,9 @@
     "semantic_hash": ""
   },
   "app/Http/Controllers/PostulanteController.php": {
-    "mtime": 1792100197.3710904,
-    "seen": 1792100292.7345927,
-    "ast_hash": "f25ef99ed8e92b6b7c3de3ab31223dc9",
+    "mtime": 1792595682.1932309,
+    "seen": 1792595956.3156087,
+    "ast_hash": "e5384acf74ce814559ed17ba198df19f",
     "semantic_hash": ""
   },
   "app/Http/Middleware/EsContratista.php": {
@@ -486,9 +486,9 @@
     "semantic_hash": ""
   },
   "app/Models/AsignacionPrueba.php": {
-    "mtime": 1792100076.42795,
-    "seen": 1792100292.7345927,
-    "ast_hash": "c5fd8a219d4d6bce26666b93d31c6bc6",
+    "mtime": 1792595682.1942308,
+    "seen": 1792595956.3156087,
+    "ast_hash": "52e28282599a5734d421ed22805144b3",
     "semantic_hash": ""
   },
   "app/Models/Postulacion.php": {
@@ -594,9 +594,9 @@
     "semantic_hash": ""
   },
   "resources/views/contratista/show.blade.php": {
-    "mtime": 1792431708.897182,
-    "seen": 1792431740.4763286,
-    "ast_hash": "6a2d73bc817588a2361e33f1c2c746ec",
+    "mtime": 1792595682.2152321,
+    "seen": 1792595956.3156087,
+    "ast_hash": "74626d664e31e4c7efddf646c9095c0f",
     "semantic_hash": ""
   },
   "resources/views/layouts/app.blade.php": {
@@ -606,15 +606,15 @@
     "semantic_hash": ""
   },
   "resources/views/postulante/index.blade.php": {
-    "mtime": 1792431708.899182,
-    "seen": 1792431740.4763286,
-    "ast_hash": "8dff2a52a0a0dc5511ec5af8720b268f",
+    "mtime": 1792595682.216233,
+    "seen": 1792595956.3156087,
+    "ast_hash": "a3c676957a0aa0bdf2da12e4260bc40c",
     "semantic_hash": ""
   },
   "tests/Feature/FlujoPostulacionTest.php": {
-    "mtime": 1792444640.3363352,
-    "seen": 1792444822.6460247,
-    "ast_hash": "0e039da2e9eef0c27e44a09a527e4f51",
+    "mtime": 1792595682.2192328,
+    "seen": 1792595956.3156087,
+    "ast_hash": "4c8a0b96815ddd5c9d670fb3ea249ac2",
     "semantic_hash": ""
   },
   "tests/Unit/Psicometria/PuntajeTTest.php": {
@@ -744,9 +744,9 @@
     "semantic_hash": ""
   },
   "app/Console/Commands/VerificarComunicacion.php": {
-    "mtime": 1792445479.0366364,
-    "seen": 1792445625.5712948,
-    "ast_hash": "bfc0a5ca7bc68d040d24226d7215d3ec",
+    "mtime": 1792445986.658593,
+    "seen": 1792595669.601051,
+    "ast_hash": "0f94a1d652792d8cd91a11b7931c971c",
     "semantic_hash": ""
   },
   "app/Http/Requests/LoginRequest.php": {
@@ -774,9 +774,9 @@
     "semantic_hash": ""
   },
   "database/seeders/ComunicacionSeeder.php": {
-    "mtime": 1792445448.2900796,
-    "seen": 1792445625.5712948,
-    "ast_hash": "93698f9b671fe643d5a096fdfe0ee759",
+    "mtime": 1792445986.660591,
+    "seen": 1792595669.601051,
+    "ast_hash": "12f57e0eb93aa8b049745dab16638c7f",
     "semantic_hash": ""
   },
   "database/seeders/data/comunicacion.json": {
@@ -795,6 +795,84 @@
     "mtime": 1792445481.5122395,
     "seen": 1792445625.5712948,
     "ast_hash": "6bc5facc7ea4010b310a960509fc43b9",
+    "semantic_hash": ""
+  },
+  "app/Console/Commands/VerificarBarsit.php": {
+    "mtime": 1792590830.649091,
+    "seen": 1792595669.601051,
+    "ast_hash": "a74044a10802258751143289d66d258a",
+    "semantic_hash": ""
+  },
+  "app/Console/Commands/VerificarEscuchaActiva.php": {
+    "mtime": 1792445866.8507397,
+    "seen": 1792595669.601051,
+    "ast_hash": "3bd82e4c624a6728ec465a1c0ca68c88",
+    "semantic_hash": ""
+  },
+  "app/Console/Commands/VerificarKeirsey.php": {
+    "mtime": 1792590830.6515982,
+    "seen": 1792595669.601051,
+    "ast_hash": "a7e3a77e712738af289171aef35c9e71",
+    "semantic_hash": ""
+  },
+  "app/Services/Psicometria/Estrategias/DicotomiaCombinada.php": {
+    "mtime": 1792590830.6535985,
+    "seen": 1792595669.601051,
+    "ast_hash": "41bc60a7d6532e6ad0a1af69920c37ed",
+    "semantic_hash": ""
+  },
+  "database/database/migrations/2026_10_19_000000_create_rangos_interpretacion_table.php": {
+    "mtime": 1792445866.852741,
+    "seen": 1792595669.601051,
+    "ast_hash": "7840e0dffd3a8f13c180ef3d1879ecc6",
+    "semantic_hash": ""
+  },
+  "database/migrations/2026_10_20_000000_add_metodo_dicotomia_combinada.php": {
+    "mtime": 1792595936.3225653,
+    "seen": 1792595956.3156087,
+    "ast_hash": "70ba71e6a884228764026912637b0ea8",
+    "semantic_hash": ""
+  },
+  "database/seeders/BarsitSeeder.php": {
+    "mtime": 1792590830.6615999,
+    "seen": 1792595669.601051,
+    "ast_hash": "4cf11bd2620621bc1eefdd6845fae808",
+    "semantic_hash": ""
+  },
+  "database/seeders/EscuchaActivaSeeder.php": {
+    "mtime": 1792445866.8582482,
+    "seen": 1792595669.601051,
+    "ast_hash": "ddc9c239570884fe4bbba291a06650ed",
+    "semantic_hash": ""
+  },
+  "database/seeders/KeirseySeeder.php": {
+    "mtime": 1792590830.663599,
+    "seen": 1792595669.601051,
+    "ast_hash": "91e038b25f94b6e755d0ba8f26f7b376",
+    "semantic_hash": ""
+  },
+  "database/seeders/data/barsit.json": {
+    "mtime": 1792590830.665109,
+    "seen": 1792595669.601051,
+    "ast_hash": "e7aaaa3e76fcaaed08c8f67d5681c638",
+    "semantic_hash": ""
+  },
+  "database/seeders/data/escucha_activa.json": {
+    "mtime": 1792445866.8622484,
+    "seen": 1792595669.601051,
+    "ast_hash": "7f978b9ac5cfa323e2827e97583c182c",
+    "semantic_hash": ""
+  },
+  "database/seeders/data/keirsey.json": {
+    "mtime": 1792590830.666109,
+    "seen": 1792595669.601051,
+    "ast_hash": "9b8b8fd58da62638fed62710662a2da7",
+    "semantic_hash": ""
+  },
+  "resources/views/postulante/formulario.blade.php": {
+    "mtime": 1792595622.4349735,
+    "seen": 1792595669.601051,
+    "ast_hash": "8c3ee676cd8ea9b47454877b274b15cd",
     "semantic_hash": ""
   }
 }

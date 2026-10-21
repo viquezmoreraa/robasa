@@ -5,8 +5,6 @@ namespace Tests\Feature;
 use App\Models\AsignacionPrueba;
 use App\Models\Postulacion;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Http\UploadedFile;
-use Illuminate\Support\Facades\Storage;
 use Tests\TestCase;
 
 class FlujoPostulacionTest extends TestCase
@@ -24,8 +22,6 @@ class FlujoPostulacionTest extends TestCase
 
     public function test_flujo_completo_postulante_y_contratista(): void
     {
-        Storage::fake();
-
         // 1. El postulante envía el formulario y crea su cuenta
         $this->post('/postulaciones', [
             'puesto' => 'chofer', 'nombre' => 'Ana Pérez', 'cedula' => '123',
@@ -45,14 +41,12 @@ class FlujoPostulacionTest extends TestCase
         $this->post("/contratista/postulaciones/{$postulacion->id}/asignar", ['prueba_id' => 1])->assertRedirect();
         $this->post('/logout');
 
-        // 3. El postulante ve la tarea, la entrega y queda completada
+        // 3. El postulante ve la tarea y abre la ventana del formulario (por ahora solo la portada)
         $this->post('/login', ['usuario' => 'ana@gmail.com', 'password' => 'clave1234'])->assertRedirect('/postulante');
         $asignacion = AsignacionPrueba::firstOrFail();
-        $this->get('/postulante')->assertOk()->assertSee($asignacion->prueba->nombre);
-        $this->post("/postulante/tareas/{$asignacion->id}", [
-            'archivo' => UploadedFile::fake()->create('resp.pdf', 10, 'application/pdf'),
-        ])->assertRedirect();
-        $this->assertSame('COMPLETADA', $asignacion->fresh()->estado);
+        $this->get('/postulante')->assertOk()->assertSee($asignacion->prueba->nombre)->assertSee('Ir al formulario');
+        $this->get("/postulante/tareas/{$asignacion->id}")->assertOk()->assertSee($asignacion->prueba->nombre);
+        $this->assertSame('ASIGNADA', $asignacion->fresh()->estado);
 
         // Un postulante no entra al panel del contratista
         $this->get('/contratista')->assertForbidden();

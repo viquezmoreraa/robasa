@@ -38,16 +38,12 @@
                     <p style="margin-bottom: 14px; white-space: pre-line;">{{ $t->prueba->instrucciones }}</p>
 
                     @if ($t->completada())
-                        <span class="badge badge-ok">Entregada el {{ $t->fecha_fin?->format('d/m/Y H:i') }}</span>
+                        <span class="badge badge-ok">Completada el {{ $t->fecha_fin?->format('d/m/Y H:i') }}</span>
                     @else
-                        <form method="POST" action="{{ route('postulante.entregar', $t) }}" enctype="multipart/form-data">
-                            @csrf
-                            <label for="archivo-{{ $t->id }}">Archivo (PDF, Word, Excel o imagen, máx. 10 MB)</label>
-                            <input id="archivo-{{ $t->id }}" type="file" name="archivo" required>
-                            <label for="resp-{{ $t->id }}">Comentario (opcional)</label>
-                            <textarea id="resp-{{ $t->id }}" name="respuesta_texto" rows="3"></textarea>
-                            <button class="btn" type="submit">Subir y marcar como completada</button>
-                        </form>
+                        {{-- La prueba se responde como formulario en una ventana aparte --}}
+                        <a class="btn" href="{{ route('postulante.formulario', $t) }}" target="_blank" rel="noopener">
+                            {{ $t->estado === 'EN_CURSO' ? 'Continuar prueba' : 'Ir al formulario' }}
+                        </a>
                     @endif
                 </div>
             </div>
