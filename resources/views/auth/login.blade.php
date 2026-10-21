@@ -13,7 +13,10 @@
             <input id="usuario" name="usuario" value="{{ old('usuario') }}" autocomplete="username" required autofocus>
 
             <label for="password">Contraseña</label>
-            <input id="password" type="password" name="password" autocomplete="current-password" required>
+            <x-campo-password required />
+            <p style="margin: -4px 0 14px; font-size: .85rem; text-align: right;">
+                <a href="{{ route('password.request') }}">¿Olvidó su contraseña?</a>
+            </p>
 
             <label style="display: flex; align-items: center; gap: 8px;">
                 <input type="checkbox" name="recordar" value="1" style="width: auto; margin: 0;" @checked(old('recordar'))>

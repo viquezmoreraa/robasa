@@ -3,6 +3,7 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\PostulacionController;
 use App\Http\Controllers\PostulanteController;
+use App\Http\Controllers\RecuperarContrasenaController;
 use App\Http\Controllers\TalentoHumanoController;
 use Illuminate\Foundation\Http\Middleware\ValidateCsrfToken;
 use Illuminate\Support\Facades\Route;
@@ -19,6 +20,14 @@ Route::middleware('guest')->group(function () {
     Route::get('/login', [AuthController::class, 'form'])->name('login');
     Route::get('/admin/login', [AuthController::class, 'form'])->name('admin.login');
     Route::post('/login', [AuthController::class, 'login'])->name('login.store');
+
+    // Recuperación de contraseña: enlace con token de un solo uso que vence (config/auth.php)
+    Route::get('/olvide-contrasena', [RecuperarContrasenaController::class, 'solicitud'])->name('password.request');
+    Route::post('/olvide-contrasena', [RecuperarContrasenaController::class, 'enviarEnlace'])
+        ->middleware('throttle:5,1')->name('password.email');
+    Route::get('/restablecer-contrasena/{token}', [RecuperarContrasenaController::class, 'formulario'])->name('password.reset');
+    Route::post('/restablecer-contrasena', [RecuperarContrasenaController::class, 'restablecer'])
+        ->middleware('throttle:5,1')->name('password.update');
 
     // Registro: último paso del formulario de postulación (única forma de crear cuentas)
     Route::get('/crear-cuenta', [PostulacionController::class, 'create'])->name('postulaciones.create');

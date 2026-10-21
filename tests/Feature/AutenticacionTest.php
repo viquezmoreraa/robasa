@@ -36,7 +36,21 @@ class AutenticacionTest extends TestCase
     {
         $this->get('/crear-cuenta?puesto=chofer')
             ->assertOk()
-            ->assertSee('name="_token"', false);
+            ->assertSee('name="_token"', false)
+            // Las dos contraseñas tienen el botón para mostrarlas
+            ->assertSee('aria-controls="password"', false)
+            ->assertSee('aria-controls="password_confirmation"', false);
+    }
+
+    public function test_el_correo_de_datos_personales_rellena_el_de_la_cuenta(): void
+    {
+        $this->get('/crear-cuenta?puesto=chofer&correo=ana%40gmail.com')
+            ->assertOk()
+            ->assertSee('id="nuevo_correo" name="nuevo_correo" value="ana@gmail.com"', false);
+
+        // El usuario lo puede cambiar: se guarda el que escribe en la cuenta, no el de datos personales
+        $this->registrar(['correo' => 'ana@gmail.com', 'nuevo_correo' => 'ana.perez@outlook.com']);
+        $this->assertSame('ana.perez@outlook.com', User::firstOrFail()->email);
     }
 
     public function test_el_registro_crea_un_postulante_con_la_contrasena_hasheada(): void
@@ -82,6 +96,21 @@ class AutenticacionTest extends TestCase
         $this->registrar(['password_confirmation' => 'otraClave99'])->assertSessionHasErrors('password');
 
         $this->assertDatabaseCount('users', 0);
+    }
+
+    public function test_el_registro_valida_el_formato_de_la_cedula(): void
+    {
+        foreach (['123', 'abc123456', '0-0234-0567', '1-0234-05678', '1234567890'] as $cedula) {
+            $this->registrar(['cedula' => $cedula])->assertSessionHasErrors('cedula');
+        }
+        $this->assertDatabaseCount('users', 0);
+
+        foreach (['1-0234-0567', '102340567', '155812345678'] as $i => $cedula) {
+            $this->registrar(['cedula' => $cedula, 'username' => "ana_{$i}", 'nuevo_correo' => "ana{$i}@gmail.com"])
+                ->assertSessionHasNoErrors();
+            $this->post('/logout');
+        }
+        $this->assertDatabaseCount('users', 3);
     }
 
     public function test_el_login_acepta_correo_o_nombre_de_usuario(): void

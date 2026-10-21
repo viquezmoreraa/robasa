@@ -172,6 +172,18 @@
             min-height: 80px;
         }
 
+        .mensaje-campo {
+            font-size: 0.75rem;
+            color: rgba(255, 255, 255, 0.5);
+            margin-top: 0.35rem;
+        }
+        .mensaje-campo[data-estado="error"] { color: #ff9b8f; }
+        .mensaje-campo[data-estado="ok"] { color: #5fe39a; }
+
+        input.invalido, input.invalido:focus { border-color: #e74c3c; }
+        input.invalido:focus { box-shadow: 0 0 0 3px rgba(231, 76, 60, 0.25); }
+        input.valido { border-color: #2ecc71; }
+
         .date-container {
             display: grid;
             grid-template-columns: 1fr 1.3fr 1fr;
@@ -260,7 +272,8 @@
 
             <div class="form-group">
                 <label for="cedula">Número de Cédula / Identificación</label>
-                <input type="text" id="cedula" name="cedula" placeholder="Ej. 1-0234-0567" required>
+                <input type="text" id="cedula" name="cedula" placeholder="Ej. 1-0234-0567" inputmode="numeric" maxlength="14" autocomplete="off" aria-describedby="cedulaMensaje" required>
+                <div class="mensaje-campo" id="cedulaMensaje" aria-live="polite">Cédula de 9 dígitos (ej. 1-0234-0567) o DIMEX de 11 o 12 dígitos.</div>
             </div>
 
             <div class="form-group">
@@ -371,6 +384,86 @@
             opt.textContent = i;
             selectAnio.appendChild(opt);
         }
+
+        // Cédula: valida mientras se escribe. Nacional = 9 dígitos (X-XXXX-XXXX), DIMEX = 11 o 12 dígitos.
+        const inputCedula = document.getElementById('cedula');
+        const mensajeCedula = document.getElementById('cedulaMensaje');
+        const ayudaCedula = mensajeCedula.textContent;
+        let cedulaTocada = false;
+
+        function errorCedula(valor) {
+            const digitos = valor.replace(/-/g, '');
+            if (!digitos) return 'Ingrese su número de cédula.';
+            if (digitos.length === 9) {
+                return digitos[0] === '0' ? 'La cédula no empieza con 0. Ej. 1-0234-0567.' : '';
+            }
+            if (digitos.length === 11 || digitos.length === 12) return '';
+            if (digitos.length < 9) {
+                const faltan = 9 - digitos.length;
+                return `Faltan ${faltan} dígito${faltan === 1 ? '' : 's'}: la cédula tiene 9 (ej. 1-0234-0567).`;
+            }
+            return 'La cédula tiene 9 dígitos y el DIMEX 11 o 12.';
+        }
+
+        function mostrarCedula(texto, estado) {
+            mensajeCedula.textContent = texto;
+            mensajeCedula.dataset.estado = estado;
+            inputCedula.classList.toggle('invalido', estado === 'error');
+            inputCedula.classList.toggle('valido', estado === 'ok');
+        }
+
+        function validarCedula() {
+            const error = errorCedula(inputCedula.value);
+            inputCedula.setCustomValidity(error);
+
+            // Antes de salir del campo solo se avisa cuando ya está bien, para no regañar a medio escribir
+            if (!error) mostrarCedula('✓ Número de identificación válido.', 'ok');
+            else if (cedulaTocada) mostrarCedula(error, 'error');
+            else mostrarCedula(ayudaCedula, '');
+        }
+
+        inputCedula.addEventListener('input', () => {
+            const antes = inputCedula.value;
+            const limpio = antes.replace(/[^\d-]/g, '').replace(/-{2,}/g, '-').replace(/^-/, '');
+
+            if (limpio !== antes) {
+                // Conserva la posición del cursor al quitar los caracteres no permitidos
+                const cursor = inputCedula.selectionStart - (antes.length - limpio.length);
+                inputCedula.value = limpio;
+                inputCedula.setSelectionRange(Math.max(cursor, 0), Math.max(cursor, 0));
+                validarCedula();
+                mostrarCedula('Solo se permiten números y guiones.', 'error');
+                return;
+            }
+            validarCedula();
+        });
+
+        // Deja la cédula como X-XXXX-XXXX y el DIMEX sin guiones (el formato que acepta el servidor)
+        function formatearCedula() {
+            const digitos = inputCedula.value.replace(/-/g, '');
+            if (/^[1-9]\d{8}$/.test(digitos)) {
+                inputCedula.value = `${digitos[0]}-${digitos.slice(1, 5)}-${digitos.slice(5)}`;
+            } else if (/^\d{11,12}$/.test(digitos)) {
+                inputCedula.value = digitos;
+            }
+        }
+
+        inputCedula.addEventListener('blur', () => {
+            cedulaTocada = true;
+            formatearCedula();
+            validarCedula();
+        });
+
+        // Al enviar con Enter el campo no pierde el foco, así que también se formatea aquí
+        document.getElementById('personalForm').addEventListener('submit', formatearCedula);
+
+        // Si se intenta enviar con la cédula mal, muestra el error aunque no haya salido del campo
+        inputCedula.addEventListener('invalid', () => {
+            cedulaTocada = true;
+            validarCedula();
+        });
+
+        validarCedula();
 
         function toggleLicenciaDetails() {
             const selectLicencia = document.getElementById('tiene_licencia').value;

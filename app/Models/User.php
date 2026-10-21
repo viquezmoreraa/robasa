@@ -3,6 +3,7 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\Notifications\RestablecerContrasena;
 use Database\Factories\UserFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -57,5 +58,10 @@ class User extends Authenticatable
     public function esTalentoHumano(): bool
     {
         return $this->rol === 'talento_humano';
+    }
+
+    public function sendPasswordResetNotification($token): void
+    {
+        $this->notify((new RestablecerContrasena($token))->locale('es'));
     }
 }

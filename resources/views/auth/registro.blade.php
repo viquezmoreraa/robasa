@@ -166,6 +166,14 @@
             margin-top: 0.3rem;
         }
 
+        .hint[data-estado="error"] { color: #ff9b8f; }
+        .hint[data-estado="ok"] { color: #5fe39a; }
+        .hint:empty { display: none; }
+
+        input.invalido, input.invalido:focus { border-color: #e74c3c; }
+        input.invalido:focus { box-shadow: 0 0 0 3px rgba(231, 76, 60, 0.25); }
+        input.valido { border-color: #2ecc71; }
+
         .errores {
             margin-bottom: 1.25rem;
             padding: 0.75rem 1rem;
@@ -213,6 +221,10 @@
         }
 
         .back-link:hover { color: #ffffff; }
+
+        /* El componente del ojo trae su propio margen; aquí lo da .form-group */
+        .form-group .campo-password { margin-bottom: 0; }
+        .form-group .toggle-password { border-radius: 0 0.65rem 0.65rem 0; }
     </style>
 </head>
 <body>
@@ -254,19 +266,21 @@
 
             <div class="form-group">
                 <label for="nuevo_correo">Correo electrónico para su cuenta *</label>
-                <input type="email" id="nuevo_correo" name="nuevo_correo" value="{{ old('nuevo_correo') }}" placeholder="Ej. su.correo@gmail.com" maxlength="150" autocomplete="email" required>
+                {{-- Se rellena con el correo de "Datos personales" (llega en la URL) para no escribirlo dos veces; se puede cambiar --}}
+                <input type="email" id="nuevo_correo" name="nuevo_correo" value="{{ old('nuevo_correo', request()->query('correo')) }}" placeholder="Ej. su.correo@gmail.com" maxlength="150" autocomplete="email" required>
                 <div class="hint">Se aceptan correos de Gmail, Hotmail, Outlook, Yahoo o iCloud.</div>
             </div>
 
             <div class="form-group">
                 <label for="password">Contraseña segura *</label>
-                <input type="password" id="password" name="password" placeholder="Mínimo 8 caracteres, números y letras" minlength="8" autocomplete="new-password" required>
+                <x-campo-password autocomplete="new-password" placeholder="Mínimo 8 caracteres, números y letras" minlength="8" required />
                 <div class="hint">Use al menos 8 caracteres combinando letras y números.</div>
             </div>
 
             <div class="form-group">
                 <label for="password_confirmation">Confirme la contraseña *</label>
-                <input type="password" id="password_confirmation" name="password_confirmation" minlength="8" autocomplete="new-password" required>
+                <x-campo-password id="password_confirmation" name="password_confirmation" autocomplete="new-password" minlength="8" data-coincide-con="password" aria-describedby="coincidenciaMensaje" required />
+                <div class="hint" id="coincidenciaMensaje" aria-live="polite"></div>
             </div>
 
             <button type="submit" class="btn-submit">Enviar formulario</button>
@@ -291,5 +305,10 @@
         document.getElementById('backLinkTop').href = `empleos-anteriores.html?${queryString}`;
         document.getElementById('backLinkBottom').href = `empleos-anteriores.html?${queryString}`;
     </script>
+    <script src="{{ asset('js/coincidencia-password.js') }}"></script>
+    {{-- Al final y no en <head>: esta vista no usa @extends, así que los @push de
+         <x-campo-password> recién existen después de renderizar el formulario --}}
+    @stack('estilos')
+    @stack('scripts')
 </body>
 </html>

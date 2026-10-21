@@ -24,7 +24,7 @@ class FlujoPostulacionTest extends TestCase
     {
         // 1. El postulante envía el formulario y crea su cuenta
         $this->post('/postulaciones', [
-            'puesto' => 'chofer', 'nombre' => 'Ana Pérez', 'cedula' => '123',
+            'puesto' => 'chofer', 'nombre' => 'Ana Pérez', 'cedula' => '1-0234-0567',
             'dia' => '5', 'mes' => '3', 'anio' => '1995', 'tiene_licencia' => 'si', 'tipo_licencia' => 'B1',
             'username' => 'ana_perez', 'nuevo_correo' => 'ana@gmail.com',
             'password' => 'clave1234', 'password_confirmation' => 'clave1234',

@@ -24,7 +24,8 @@ class RegistroRequest extends FormRequest
             // Pasos anteriores del formulario (llegan como campos ocultos)
             'puesto'               => 'nullable|string|max:60',
             'nombre'               => 'nullable|string|max:150',
-            'cedula'               => 'nullable|string|max:30',
+            // Misma regla que datos-personales.html: nacional de 9 dígitos (con o sin guiones) o DIMEX de 11-12
+            'cedula'               => ['nullable', 'string', 'regex:/^([1-9]-?\d{4}-?\d{4}|\d{11,12})$/'],
             'dia'                  => 'nullable|integer|between:1,31',
             'mes'                  => 'nullable|integer|between:1,12',
             'anio'                 => 'nullable|integer|min:1900',
@@ -60,6 +61,7 @@ class RegistroRequest extends FormRequest
             'password.min'          => 'La contraseña debe tener al menos 8 caracteres.',
             'password.letters'      => 'La contraseña debe incluir al menos una letra.',
             'password.numbers'      => 'La contraseña debe incluir al menos un número.',
+            'cedula.regex'          => 'La cédula debe tener 9 dígitos (ej. 1-0234-0567) o, si es DIMEX, 11 o 12 dígitos.',
         ];
     }
 }
