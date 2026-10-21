@@ -20,6 +20,10 @@ class DatabaseSeeder extends Seeder
         $this->call(BigFiveSeeder::class);
         $this->call(ComunicacionSeeder::class);
         $this->call(EscuchaActivaSeeder::class);
+        $this->call(KeirseySeeder::class);
+        $this->call(BarsitSeeder::class);
+        $this->call(EdSeeder::class);
+        $this->call(DiscSeeder::class);
 
         // Pruebas adicionales (se responden en formulario, igual que las demás)
         foreach ([
