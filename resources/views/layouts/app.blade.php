@@ -44,6 +44,7 @@
         .badge { display: inline-block; padding: 3px 10px; border-radius: 999px; font-size: .78rem; font-weight: 600; }
         .badge-pend { background: rgba(245,132,38,.2); color: #f9a660; }
         .badge-ok { background: rgba(46,204,113,.2); color: #5fe39a; }
+        .badge-no { background: rgba(231,76,60,.2); color: #ff9b8f; }
         .alerta { padding: 12px 16px; border-radius: 8px; margin-bottom: 18px; background: rgba(46,204,113,.15); color: #7deaa9; }
         .alerta-error { background: rgba(231,76,60,.15); color: #ff9b8f; }
         .datos { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px 24px; }

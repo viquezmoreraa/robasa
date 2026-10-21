@@ -18,7 +18,7 @@ class AuthController extends Controller
         $request->authenticate();
         $request->session()->regenerate();
 
-        $destino = $request->user()->esContratista() ? route('contratista.index') : route('postulante.index');
+        $destino = $request->user()->esTalentoHumano() ? route('talento-humano.index') : route('postulante.index');
 
         return redirect()->intended($destino);
     }

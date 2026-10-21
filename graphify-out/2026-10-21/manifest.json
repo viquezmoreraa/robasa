@@ -318,8 +318,8 @@
     "semantic_hash": "2af2fedd571a66ee70797fc7d80dffd9"
   },
   "database/seeders/DatabaseSeeder.php": {
-    "mtime": 1792595623.6570606,
-    "seen": 1792595669.601051,
+    "mtime": 1792595682.1962304,
+    "seen": 1792595956.3156087,
     "ast_hash": "91f41ef1e853abc182b3b4b582d4b22f",
     "semantic_hash": ""
   },
@@ -408,8 +408,8 @@
     "semantic_hash": "3c6ce2e6d16444282b24a9aa63885563"
   },
   "routes/web.php": {
-    "mtime": 1792595583.8739264,
-    "seen": 1792595669.601051,
+    "mtime": 1792595682.2182324,
+    "seen": 1792595956.3156087,
     "ast_hash": "6e5c2012c3c558382e952680a0b46284",
     "semantic_hash": ""
   },
@@ -462,8 +462,8 @@
     "semantic_hash": ""
   },
   "app/Http/Controllers/ContratistaController.php": {
-    "mtime": 1792595586.4424691,
-    "seen": 1792595669.601051,
+    "mtime": 1792595682.191231,
+    "seen": 1792595956.3156087,
     "ast_hash": "63fc9139bcc5853cab72f4206b1ef81f",
     "semantic_hash": ""
   },
@@ -474,8 +474,8 @@
     "semantic_hash": ""
   },
   "app/Http/Controllers/PostulanteController.php": {
-    "mtime": 1792595581.4295657,
-    "seen": 1792595669.601051,
+    "mtime": 1792595682.1932309,
+    "seen": 1792595956.3156087,
     "ast_hash": "e5384acf74ce814559ed17ba198df19f",
     "semantic_hash": ""
   },
@@ -486,8 +486,8 @@
     "semantic_hash": ""
   },
   "app/Models/AsignacionPrueba.php": {
-    "mtime": 1792595587.676286,
-    "seen": 1792595669.601051,
+    "mtime": 1792595682.1942308,
+    "seen": 1792595956.3156087,
     "ast_hash": "52e28282599a5734d421ed22805144b3",
     "semantic_hash": ""
   },
@@ -594,8 +594,8 @@
     "semantic_hash": ""
   },
   "resources/views/contratista/show.blade.php": {
-    "mtime": 1792595621.3010504,
-    "seen": 1792595669.601051,
+    "mtime": 1792595682.2152321,
+    "seen": 1792595956.3156087,
     "ast_hash": "74626d664e31e4c7efddf646c9095c0f",
     "semantic_hash": ""
   },
@@ -606,14 +606,14 @@
     "semantic_hash": ""
   },
   "resources/views/postulante/index.blade.php": {
-    "mtime": 1792595618.556885,
-    "seen": 1792595669.601051,
+    "mtime": 1792595682.216233,
+    "seen": 1792595956.3156087,
     "ast_hash": "a3c676957a0aa0bdf2da12e4260bc40c",
     "semantic_hash": ""
   },
   "tests/Feature/FlujoPostulacionTest.php": {
-    "mtime": 1792595627.2516503,
-    "seen": 1792595669.601051,
+    "mtime": 1792595682.2192328,
+    "seen": 1792595956.3156087,
     "ast_hash": "4c8a0b96815ddd5c9d670fb3ea249ac2",
     "semantic_hash": ""
   },
@@ -828,9 +828,9 @@
     "semantic_hash": ""
   },
   "database/migrations/2026_10_20_000000_add_metodo_dicotomia_combinada.php": {
-    "mtime": 1792590830.6605997,
-    "seen": 1792595669.601051,
-    "ast_hash": "7fdac5447d89d96be785b87b310f1e59",
+    "mtime": 1792595936.3225653,
+    "seen": 1792595956.3156087,
+    "ast_hash": "70ba71e6a884228764026912637b0ea8",
     "semantic_hash": ""
   },
   "database/seeders/BarsitSeeder.php": {

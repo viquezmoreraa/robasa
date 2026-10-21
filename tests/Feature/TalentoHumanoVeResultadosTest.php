@@ -11,14 +11,14 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\DB;
 use Tests\TestCase;
 
-class ContratistaVeResultadosTest extends TestCase
+class TalentoHumanoVeResultadosTest extends TestCase
 {
     use RefreshDatabase;
 
     private function crearAsignacionAsignada(string $codigoPrueba): array
     {
         $postulante = User::factory()->create(['rol' => 'postulante']);
-        $contratista = User::factory()->create(['rol' => 'contratista']);
+        $talentoHumano = User::factory()->create(['rol' => 'talento_humano']);
         $postulacion = Postulacion::create([
             'user_id' => $postulante->id,
             'nombre'  => 'Ana Pérez',
@@ -29,17 +29,17 @@ class ContratistaVeResultadosTest extends TestCase
         $asignacion = AsignacionPrueba::create([
             'postulacion_id' => $postulacion->id,
             'prueba_id'      => $pruebaId,
-            'asignada_por'   => $contratista->id,
+            'asignada_por'   => $talentoHumano->id,
             'estado'         => 'ASIGNADA',
         ]);
 
-        return [$postulante, $contratista, $postulacion, $asignacion];
+        return [$postulante, $talentoHumano, $postulacion, $asignacion];
     }
 
     public function test_th_ve_el_resumen_y_la_interpretacion_de_keirsey_completado(): void
     {
         $this->seed(KeirseySeeder::class);
-        [$postulante, $contratista, $postulacion, $asignacion] = $this->crearAsignacionAsignada('KEIRSEY');
+        [$postulante, $talentoHumano, $postulacion, $asignacion] = $this->crearAsignacionAsignada('KEIRSEY');
 
         $preguntas = DB::table('preguntas')->where('prueba_id', $asignacion->prueba_id)->get();
         $opciones = DB::table('opciones')->whereIn('pregunta_id', $preguntas->pluck('id'))->get()->groupBy('pregunta_id');
@@ -69,8 +69,8 @@ class ContratistaVeResultadosTest extends TestCase
             ->where('codigo', 'ESTJ')
             ->value('texto_interpretacion');
 
-        $this->actingAs($contratista)
-            ->get(route('contratista.show', $postulacion))
+        $this->actingAs($talentoHumano)
+            ->get(route('talento-humano.show', $postulacion))
             ->assertOk()
             ->assertSee('ESTJ')
             ->assertSee($interpretacionEsperada);
@@ -79,7 +79,7 @@ class ContratistaVeResultadosTest extends TestCase
     public function test_th_ve_el_puntaje_directo_por_area_de_barsit_que_no_tiene_normas_cargadas(): void
     {
         $this->seed(BarsitSeeder::class);
-        [$postulante, $contratista, $postulacion, $asignacion] = $this->crearAsignacionAsignada('BARSIT');
+        [$postulante, $talentoHumano, $postulacion, $asignacion] = $this->crearAsignacionAsignada('BARSIT');
 
         $preguntas = DB::table('preguntas')->where('prueba_id', $asignacion->prueba_id)->get();
         $opciones = DB::table('opciones')->whereIn('pregunta_id', $preguntas->pluck('id'))->get()->groupBy('pregunta_id');
@@ -102,8 +102,8 @@ class ContratistaVeResultadosTest extends TestCase
             ->post(route('postulante.prueba.guardar', $asignacion), ['respuestas' => $respuestas])
             ->assertRedirect(route('postulante.index'));
 
-        $this->actingAs($contratista)
-            ->get(route('contratista.show', $postulacion))
+        $this->actingAs($talentoHumano)
+            ->get(route('talento-humano.show', $postulacion))
             ->assertOk()
             ->assertSee('Sin normas de referencia cargadas')
             ->assertSee('Información') // nombre de una de las dimensiones de BARSIT

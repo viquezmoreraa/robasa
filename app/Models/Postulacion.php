@@ -18,6 +18,21 @@ class Postulacion extends Model
         'nivel_educativo', 'empleos_anteriores', 'correo',
     ];
 
+    protected $attributes = ['estado' => 'POSTULADO'];
+
+    /** Estados del proceso de selección (los asigna Talento Humano): clave => [etiqueta, descripción]. */
+    public const ESTADOS = [
+        'POSTULADO'       => ['Postulado', 'El candidato completó y envió la postulación.'],
+        'EN_REVISION'     => ['En revisión', 'Talento Humano está revisando la información.'],
+        'PRESELECCIONADO' => ['Preseleccionado', 'El candidato continúa a la siguiente etapa.'],
+        'ENTREVISTA'      => ['Entrevista', 'Se encuentra en proceso de entrevista.'],
+        'PRUEBAS'         => ['Pruebas', 'Tiene evaluaciones psicométricas u otras pruebas asignadas.'],
+        'REFERENCIAS'     => ['Referencias', 'Se encuentra en validación de referencias, cuando corresponda.'],
+        'OFERTA'          => ['Oferta', 'Se encuentra en etapa de propuesta/oferta.'],
+        'CONTRATADO'      => ['Contratado', 'Finalizó satisfactoriamente el proceso.'],
+        'NO_SELECCIONADO' => ['No seleccionado', 'No continúa en el proceso.'],
+    ];
+
     /** Etiqueta => columna, para mostrar la postulación en las vistas. */
     public const CAMPOS = [
         'Nombre'               => 'nombre',
@@ -63,6 +78,26 @@ class Postulacion extends Model
         $nombre = trim($this->nombre ?? '');
 
         return $nombre !== '' ? $nombre : $this->correo;
+    }
+
+    public function estadoEtiqueta(): string
+    {
+        return self::ESTADOS[$this->estado][0] ?? (string) $this->estado;
+    }
+
+    public function estadoDescripcion(): string
+    {
+        return self::ESTADOS[$this->estado][1] ?? '';
+    }
+
+    /** Clase del badge según el estado: verde si fue contratado, rojo si no sigue, naranja mientras avanza. */
+    public function estadoClase(): string
+    {
+        return match ($this->estado) {
+            'CONTRATADO'      => 'badge-ok',
+            'NO_SELECCIONADO' => 'badge-no',
+            default           => 'badge-pend',
+        };
     }
 
     /** Campos del formulario ya formateados para mostrar: etiqueta => texto. */

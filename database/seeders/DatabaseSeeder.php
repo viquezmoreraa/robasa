@@ -11,10 +11,10 @@ class DatabaseSeeder extends Seeder
 {
     public function run(): void
     {
-        // Cuenta interna del contratista: el registro público solo crea postulantes
+        // Cuenta interna de Talento Humano: el registro público solo crea postulantes
         User::updateOrCreate(
             ['email' => 'jose@robasa.com'],
-            ['name' => 'Jose', 'username' => 'jose', 'password' => Hash::make('Jose2026'), 'rol' => 'contratista']
+            ['name' => 'Jose', 'username' => 'jose', 'password' => Hash::make('Jose2026'), 'rol' => 'talento_humano']
         );
 
         $this->call(BigFiveSeeder::class);

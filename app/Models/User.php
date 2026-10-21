@@ -54,8 +54,8 @@ class User extends Authenticatable
         return $this->hasOne(Postulacion::class)->latestOfMany();
     }
 
-    public function esContratista(): bool
+    public function esTalentoHumano(): bool
     {
-        return $this->rol === 'contratista';
+        return $this->rol === 'talento_humano';
     }
 }

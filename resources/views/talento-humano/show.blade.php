@@ -3,16 +3,34 @@
 @section('titulo', $postulacion->nombreCompleto())
 
 @section('contenido')
-    <p style="margin-bottom: 14px;"><a href="{{ route('contratista.index') }}">← Volver a candidatos</a></p>
+    <p style="margin-bottom: 14px;"><a href="{{ route('talento-humano.index') }}">← Volver a candidatos</a></p>
     <h1>{{ $postulacion->nombreCompleto() }}</h1>
     <p class="sub">{{ str_replace('_', ' ', $postulacion->puesto ?? '') }} · {{ $postulacion->correo }}</p>
+
+    <div class="card">
+        <h2>Estado del proceso</h2>
+        <p style="margin-bottom: 14px;">
+            <span class="badge {{ $postulacion->estadoClase() }}">{{ $postulacion->estadoEtiqueta() }}</span>
+            <span style="font-size: .9rem; color: #c9d6ea; margin-left: 8px;">{{ $postulacion->estadoDescripcion() }}</span>
+        </p>
+        <form method="POST" action="{{ route('talento-humano.estado', $postulacion) }}">
+            @csrf
+            <label for="estado">Cambiar estado</label>
+            <select id="estado" name="estado" required>
+                @foreach (\App\Models\Postulacion::ESTADOS as $clave => [$etiqueta])
+                    <option value="{{ $clave }}" @selected($postulacion->estado === $clave)>{{ $etiqueta }}</option>
+                @endforeach
+            </select>
+            <button class="btn" type="submit">Guardar estado</button>
+        </form>
+    </div>
 
     <div class="card">
         <h2>Enviar prueba</h2>
         @if ($pruebas->isEmpty())
             <p>No hay pruebas aprobadas. Ejecute <code>php artisan db:seed</code>.</p>
         @else
-            <form method="POST" action="{{ route('contratista.asignar', $postulacion) }}">
+            <form method="POST" action="{{ route('talento-humano.asignar', $postulacion) }}">
                 @csrf
                 <label for="prueba_id">Prueba</label>
                 <select id="prueba_id" name="prueba_id" required>
@@ -45,7 +63,7 @@
                             </td>
                             <td>
                                 @if ($a->archivo_path)
-                                    <a href="{{ route('contratista.archivo', $a) }}">Descargar archivo</a>
+                                    <a href="{{ route('talento-humano.archivo', $a) }}">Descargar archivo</a>
                                 @endif
                                 @if ($a->respuesta_texto)
                                     <div style="font-size: .85rem; color: #c9d6ea; margin-top: 4px;">{{ $a->respuesta_texto }}</div>

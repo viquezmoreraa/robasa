@@ -8,8 +8,9 @@ use App\Models\Prueba;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Validation\Rule;
 
-class ContratistaController extends Controller
+class TalentoHumanoController extends Controller
 {
     public function index()
     {
@@ -18,7 +19,7 @@ class ContratistaController extends Controller
             'asignaciones as completadas_count' => fn ($q) => $q->where('estado', 'COMPLETADA'),
         ])->latest()->get();
 
-        return view('contratista.index', compact('postulaciones'));
+        return view('talento-humano.index', compact('postulaciones'));
     }
 
     public function show(Postulacion $postulacion)
@@ -47,7 +48,18 @@ class ContratistaController extends Controller
             ->get()
             ->groupBy('asignacion_id');
 
-        return view('contratista.show', compact('postulacion', 'pruebas', 'resultados', 'dimensiones'));
+        return view('talento-humano.show', compact('postulacion', 'pruebas', 'resultados', 'dimensiones'));
+    }
+
+    public function actualizarEstado(Request $request, Postulacion $postulacion)
+    {
+        $datos = $request->validate(['estado' => ['required', Rule::in(array_keys(Postulacion::ESTADOS))]]);
+
+        // Asignación directa: 'estado' no está en $fillable para que el registro nunca lo reciba del formulario.
+        $postulacion->estado = $datos['estado'];
+        $postulacion->save();
+
+        return back()->with('ok', "Estado actualizado a «{$postulacion->estadoEtiqueta()}».");
     }
 
     public function asignar(Request $request, Postulacion $postulacion)

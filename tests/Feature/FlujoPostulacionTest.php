@@ -20,7 +20,7 @@ class FlujoPostulacionTest extends TestCase
         $this->seed();
     }
 
-    public function test_flujo_completo_postulante_y_contratista(): void
+    public function test_flujo_completo_postulante_y_talento_humano(): void
     {
         // 1. El postulante envía el formulario y crea su cuenta
         $this->post('/postulaciones', [
@@ -35,10 +35,10 @@ class FlujoPostulacionTest extends TestCase
         $this->assertTrue($postulacion->tiene_licencia);
         $this->post('/logout');
 
-        // 2. El contratista entra con su usuario y contraseña, y asigna una prueba
-        $this->post('/login', ['usuario' => 'jose', 'password' => 'Jose2026'])->assertRedirect('/contratista');
-        $this->get('/contratista')->assertOk()->assertSee('Ana Pérez');
-        $this->post("/contratista/postulaciones/{$postulacion->id}/asignar", ['prueba_id' => 1])->assertRedirect();
+        // 2. Talento Humano entra con su usuario y contraseña, y asigna una prueba
+        $this->post('/login', ['usuario' => 'jose', 'password' => 'Jose2026'])->assertRedirect('/talento-humano');
+        $this->get('/talento-humano')->assertOk()->assertSee('Ana Pérez');
+        $this->post("/talento-humano/postulaciones/{$postulacion->id}/asignar", ['prueba_id' => 1])->assertRedirect();
         $this->post('/logout');
 
         // 3. El postulante ve la tarea y abre la ventana del formulario (por ahora solo la portada)
@@ -48,7 +48,7 @@ class FlujoPostulacionTest extends TestCase
         $this->get("/postulante/tareas/{$asignacion->id}")->assertOk()->assertSee($asignacion->prueba->nombre);
         $this->assertSame('ASIGNADA', $asignacion->fresh()->estado);
 
-        // Un postulante no entra al panel del contratista
-        $this->get('/contratista')->assertForbidden();
+        // Un postulante no entra al panel de Talento Humano
+        $this->get('/talento-humano')->assertForbidden();
     }
 }

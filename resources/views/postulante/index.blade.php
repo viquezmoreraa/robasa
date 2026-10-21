@@ -15,12 +15,23 @@
         }
         .check.ok { background: #2ecc71; border-color: #2ecc71; }
         .tarea-cuerpo { flex: 1; min-width: 0; }
+        .estado-postulacion { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px; padding: 14px 18px; }
+        .estado-postulacion .titulo { color: #9fb3d1; font-size: .9rem; }
+        .estado-postulacion .desc { color: #c9d6ea; font-size: .88rem; }
     </style>
 @endpush
 
 @section('contenido')
     <h1>Hola, {{ auth()->user()->name }}</h1>
     <p class="sub">Aquí puede revisar su postulación y las tareas que le envíe el equipo de ROBASA.</p>
+
+    @if ($postulacion)
+        <div class="card estado-postulacion">
+            <span class="titulo">Estado de su postulación:</span>
+            <span class="badge {{ $postulacion->estadoClase() }}">{{ $postulacion->estadoEtiqueta() }}</span>
+            <span class="desc">{{ $postulacion->estadoDescripcion() }}</span>
+        </div>
+    @endif
 
     @php $pendientes = $tareas->reject->completada()->count(); @endphp
     <div class="tabs">

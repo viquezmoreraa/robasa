@@ -1,9 +1,9 @@
 <?php
 
 use App\Http\Controllers\AuthController;
-use App\Http\Controllers\ContratistaController;
 use App\Http\Controllers\PostulacionController;
 use App\Http\Controllers\PostulanteController;
+use App\Http\Controllers\TalentoHumanoController;
 use Illuminate\Foundation\Http\Middleware\ValidateCsrfToken;
 use Illuminate\Support\Facades\Route;
 
@@ -36,10 +36,11 @@ Route::middleware('auth')->group(function () {
     Route::get('/postulante/pruebas/{asignacion}', [PostulanteController::class, 'mostrarPrueba'])->name('postulante.prueba.show');
     Route::post('/postulante/pruebas/{asignacion}', [PostulanteController::class, 'guardarPrueba'])->name('postulante.prueba.guardar');
 
-    Route::middleware('contratista')->prefix('contratista')->name('contratista.')->group(function () {
-        Route::get('/', [ContratistaController::class, 'index'])->name('index');
-        Route::get('/postulaciones/{postulacion}', [ContratistaController::class, 'show'])->name('show');
-        Route::post('/postulaciones/{postulacion}/asignar', [ContratistaController::class, 'asignar'])->name('asignar');
-        Route::get('/asignaciones/{asignacion}/archivo', [ContratistaController::class, 'archivo'])->name('archivo');
+    Route::middleware('talento-humano')->prefix('talento-humano')->name('talento-humano.')->group(function () {
+        Route::get('/', [TalentoHumanoController::class, 'index'])->name('index');
+        Route::get('/postulaciones/{postulacion}', [TalentoHumanoController::class, 'show'])->name('show');
+        Route::post('/postulaciones/{postulacion}/estado', [TalentoHumanoController::class, 'actualizarEstado'])->name('estado');
+        Route::post('/postulaciones/{postulacion}/asignar', [TalentoHumanoController::class, 'asignar'])->name('asignar');
+        Route::get('/asignaciones/{asignacion}/archivo', [TalentoHumanoController::class, 'archivo'])->name('archivo');
     });
 });

@@ -108,7 +108,7 @@ class AutenticacionTest extends TestCase
     public function test_el_login_rechaza_credenciales_invalidas_sin_crear_usuarios(): void
     {
         $this->crearUsuario();
-        $this->crearUsuario(['username' => 'jose', 'email' => 'jose@robasa.com', 'password' => Hash::make('Jose2026'), 'rol' => 'contratista']);
+        $this->crearUsuario(['username' => 'jose', 'email' => 'jose@robasa.com', 'password' => Hash::make('Jose2026'), 'rol' => 'talento_humano']);
 
         $this->post('/login', ['usuario' => 'ana_perez', 'password' => 'incorrecta'])->assertSessionHasErrors('usuario');
         $this->post('/login', ['usuario' => 'nuevo', 'password' => 'x'])->assertSessionHasErrors('usuario');

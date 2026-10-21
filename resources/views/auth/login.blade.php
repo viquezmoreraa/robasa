@@ -5,7 +5,7 @@
 @section('contenido')
     <div class="card" style="max-width: 420px; margin: 40px auto;">
         <h1>{{ $empleado ? 'Acceso empleados' : 'Iniciar sesión' }}</h1>
-        <p class="sub">{{ $empleado ? 'Ingrese con sus credenciales de contratista.' : 'Ingrese para ver su perfil y sus tareas.' }}</p>
+        <p class="sub">{{ $empleado ? 'Ingrese con sus credenciales de Talento Humano.' : 'Ingrese para ver su perfil y sus tareas.' }}</p>
 
         <form method="POST" action="{{ route('login.store') }}">
             @csrf

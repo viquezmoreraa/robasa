@@ -26,7 +26,7 @@ class PostulanteResponderBarsitTest extends TestCase
     private function crearAsignacionAsignada(): array
     {
         $postulante = User::factory()->create(['rol' => 'postulante']);
-        $contratista = User::factory()->create(['rol' => 'contratista']);
+        $talentoHumano = User::factory()->create(['rol' => 'talento_humano']);
         $postulacion = Postulacion::create([
             'user_id' => $postulante->id,
             'nombre'  => 'Ana Pérez',
@@ -37,7 +37,7 @@ class PostulanteResponderBarsitTest extends TestCase
         $asignacion = AsignacionPrueba::create([
             'postulacion_id' => $postulacion->id,
             'prueba_id'      => $pruebaId,
-            'asignada_por'   => $contratista->id,
+            'asignada_por'   => $talentoHumano->id,
             'estado'         => 'ASIGNADA',
         ]);
 
