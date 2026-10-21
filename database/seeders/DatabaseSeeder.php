@@ -21,10 +21,10 @@ class DatabaseSeeder extends Seeder
         $this->call(ComunicacionSeeder::class);
         $this->call(EscuchaActivaSeeder::class);
 
-        // Pruebas que se responden subiendo un archivo
+        // Pruebas adicionales (se responden en formulario, igual que las demás)
         foreach ([
-            ['CONOCIMIENTOS', 'Prueba de conocimientos', 'Descargue, resuelva y suba la prueba en PDF o imagen.'],
-            ['CASO_PRACTICO', 'Caso práctico', 'Resuelva el caso práctico indicado por el contratista y suba su respuesta.'],
+            ['CONOCIMIENTOS', 'Prueba de conocimientos', 'Lea cada pregunta con atención y responda en el formulario.'],
+            ['CASO_PRACTICO', 'Caso práctico', 'Analice el caso planteado y responda las preguntas del formulario.'],
         ] as [$codigo, $nombre, $instrucciones]) {
             DB::table('pruebas')->updateOrInsert(
                 ['codigo' => $codigo, 'version' => '1'],

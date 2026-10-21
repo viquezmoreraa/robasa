@@ -20,24 +20,17 @@ class PostulanteController extends Controller
         return view('postulante.index', compact('postulacion', 'tareas'));
     }
 
-    public function entregar(Request $request, AsignacionPrueba $asignacion)
+    // Ventana aparte donde el postulante responde la prueba en formato formulario.
+    // Por ahora solo muestra la portada; el formulario de preguntas se construirá después.
+    public function formulario(Request $request, AsignacionPrueba $asignacion)
     {
         abort_unless($asignacion->postulacion?->user_id == $request->user()->id, 403);
-        abort_if($asignacion->completada(), 422, 'Esta tarea ya fue entregada.');
+        abort_if($asignacion->estado === 'ANULADA', 404);
 
-        $datos = $request->validate([
-            'archivo'         => 'required|file|max:10240|mimes:pdf,doc,docx,jpg,jpeg,png,xls,xlsx',
-            'respuesta_texto' => 'nullable|string|max:5000',
-        ]);
+        $asignacion->load('prueba');
+        $totalPreguntas = DB::table('preguntas')->where('prueba_id', $asignacion->prueba_id)->count();
 
-        $asignacion->update([
-            'archivo_path'    => $request->file('archivo')->store('entregas'),
-            'respuesta_texto' => $datos['respuesta_texto'] ?? null,
-            'estado'          => 'COMPLETADA',
-            'fecha_fin'       => now(),
-        ]);
-
-        return back()->with('ok', 'Tarea entregada correctamente.');
+        return view('postulante.formulario', compact('asignacion', 'totalPreguntas'));
     }
 
     /** Muestra las preguntas de una prueba psicométrica digitalizada para responderla en línea. */
