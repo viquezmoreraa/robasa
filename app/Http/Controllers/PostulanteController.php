@@ -33,6 +33,34 @@ class PostulanteController extends Controller
         return view('postulante.formulario', compact('asignacion', 'totalPreguntas'));
     }
 
+    /**
+     * Entrega del video de experiencia laboral. La duración (máx. 2 min) se revisa en el navegador
+     * antes de subir, porque el servidor no tiene ffprobe; aquí se limita el tipo y el tamaño.
+     */
+    public function entregarVideo(Request $request, AsignacionPrueba $asignacion)
+    {
+        abort_unless($asignacion->postulacion?->user_id == $request->user()->id, 403);
+        abort_unless($asignacion->prueba->esVideo(), 404);
+        abort_if($asignacion->completada() || $asignacion->estado === 'ANULADA', 422, 'Esta tarea ya fue entregada.');
+
+        $request->validate([
+            'video' => ['required', 'file', 'max:35840', 'mimetypes:video/mp4,video/quicktime,video/webm,video/3gpp,video/x-matroska'],
+        ], [
+            'video.required'  => 'Seleccione o grabe el video.',
+            'video.uploaded'  => 'El video no se pudo subir. Verifique que pese menos de 35 MB.',
+            'video.max'       => 'El video no puede pesar más de 35 MB.',
+            'video.mimetypes' => 'El archivo debe ser un video (MP4, MOV o WEBM).',
+        ]);
+
+        $asignacion->update([
+            'archivo_path' => $request->file('video')->store('entregas/videos'),
+            'estado'       => 'COMPLETADA',
+            'fecha_fin'    => now(),
+        ]);
+
+        return redirect()->route('postulante.index')->with('ok', 'Video entregado correctamente.');
+    }
+
     /** Muestra las preguntas de una prueba psicométrica digitalizada para responderla en línea. */
     public function mostrarPrueba(Request $request, AsignacionPrueba $asignacion)
     {

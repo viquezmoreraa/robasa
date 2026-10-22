@@ -73,6 +73,33 @@ class Postulacion extends Model
         return $this->hasMany(AsignacionPrueba::class, 'postulacion_id');
     }
 
+    /**
+     * Asigna la tarea del video de experiencia, salvo que ya tenga una vigente (no se duplica
+     * si Talento Humano mueve el estado y lo vuelve a poner en PRESELECCIONADO). Devuelve si la asignó.
+     */
+    public function asignarVideoExperiencia(User $asignadaPor): bool
+    {
+        $prueba = Prueba::where('codigo', Prueba::VIDEO_EXPERIENCIA)->where('estado', 'APROBADA')->first();
+        if (!$prueba) {
+            return false;
+        }
+
+        $asignaciones = $this->asignaciones()->where('prueba_id', $prueba->id);
+        if ((clone $asignaciones)->where('estado', '!=', 'ANULADA')->exists()) {
+            return false;
+        }
+
+        $this->asignaciones()->create([
+            'prueba_id'        => $prueba->id,
+            'intento'          => ($asignaciones->max('intento') ?? 0) + 1,
+            'asignada_por'     => $asignadaPor->id,
+            'fecha_asignacion' => now(),
+            'estado'           => 'ASIGNADA',
+        ]);
+
+        return true;
+    }
+
     public function nombreCompleto(): string
     {
         $nombre = trim($this->nombre ?? '');

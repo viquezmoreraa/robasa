@@ -7,8 +7,11 @@ use App\Models\Postulacion;
 use App\Models\Prueba;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
+use Illuminate\Validation\Rules\Password as ReglaPassword;
 
 class TalentoHumanoController extends Controller
 {
@@ -59,7 +62,14 @@ class TalentoHumanoController extends Controller
         $postulacion->estado = $datos['estado'];
         $postulacion->save();
 
-        return back()->with('ok', "Estado actualizado a «{$postulacion->estadoEtiqueta()}».");
+        $mensaje = "Estado actualizado a «{$postulacion->estadoEtiqueta()}».";
+
+        if ($postulacion->estado === 'PRESELECCIONADO' && $postulacion->wasChanged('estado')
+            && $postulacion->asignarVideoExperiencia($request->user())) {
+            $mensaje .= ' Se le asignó la tarea del video de experiencia laboral.';
+        }
+
+        return back()->with('ok', $mensaje);
     }
 
     public function asignar(Request $request, Postulacion $postulacion)
@@ -79,9 +89,49 @@ class TalentoHumanoController extends Controller
         return back()->with('ok', 'Prueba enviada al postulante.');
     }
 
+    /**
+     * Talento Humano asigna una contraseña nueva al postulante cuando la olvidó y no puede usar
+     * el enlace por correo. Solo aplica a cuentas de postulante, nunca a otras de Talento Humano.
+     */
+    public function cambiarContrasena(Request $request, Postulacion $postulacion)
+    {
+        $usuario = $postulacion->user;
+        abort_unless($usuario && $usuario->rol === 'postulante', 404);
+
+        $request->validate([
+            'password' => ['required', 'confirmed', ReglaPassword::min(8)->letters()->numbers()],
+        ], [
+            'password.required'  => 'Ingrese la contraseña nueva.',
+            'password.confirmed' => 'Las contraseñas no coinciden.',
+            'password.min'       => 'La contraseña debe tener al menos 8 caracteres.',
+            'password.letters'   => 'La contraseña debe incluir al menos una letra.',
+            'password.numbers'   => 'La contraseña debe incluir al menos un número.',
+        ]);
+
+        // Igual que en la recuperación por correo: nuevo remember_token y se cierran sus sesiones abiertas
+        $usuario->forceFill([
+            'password'       => Hash::make($request->input('password')),
+            'remember_token' => Str::random(60),
+        ])->save();
+
+        if (config('session.driver') === 'database') {
+            DB::table(config('session.table', 'sessions'))->where('user_id', $usuario->id)->delete();
+        }
+
+        // Si tenía un enlace de recuperación pendiente, deja de servir
+        DB::table('password_reset_tokens')->where('email', $usuario->email)->delete();
+
+        return back()->with('ok', "Contraseña actualizada. Comuníquela al postulante (usuario: {$usuario->username}).");
+    }
+
     public function archivo(AsignacionPrueba $asignacion)
     {
         abort_unless($asignacion->archivo_path && Storage::exists($asignacion->archivo_path), 404);
+
+        // Los videos se sirven en línea (con soporte de rangos) para reproducirlos y adelantarlos en el panel
+        if ($asignacion->prueba->esVideo()) {
+            return response()->file(Storage::path($asignacion->archivo_path));
+        }
 
         return Storage::download($asignacion->archivo_path);
     }

@@ -233,6 +233,30 @@
         .back-link:hover {
             color: #ffffff;
         }
+        /* Plazas disponibles (las actualiza Talento Humano) */
+        .plazas {
+            margin-left: auto;
+            margin-right: 0.25rem;
+            padding: 0.15rem 0.6rem;
+            border-radius: 999px;
+            font-size: 0.72rem;
+            font-weight: 600;
+            white-space: nowrap;
+            background: rgba(46, 204, 113, 0.18);
+            color: #5fe39a;
+        }
+
+        .plazas.agotada {
+            background: rgba(231, 76, 60, 0.18);
+            color: #ff9b8f;
+        }
+
+        .btn-apply.deshabilitado {
+            background: rgba(255, 255, 255, 0.12);
+            color: rgba(255, 255, 255, 0.6);
+            cursor: not-allowed;
+            pointer-events: none;
+        }
     </style>
 </head>
 <body>
@@ -530,6 +554,30 @@
 
             currentCard.classList.toggle('active');
         }
+        // Plazas por puesto: si no se pueden consultar, las tarjetas quedan como están
+        fetch('/vacantes/disponibles', { headers: { 'Accept': 'application/json' } })
+            .then(r => r.ok ? r.json() : Promise.reject())
+            .then(plazas => {
+                document.querySelectorAll('.vacante-card').forEach(card => {
+                    const enlace = card.querySelector('.btn-apply');
+                    const puesto = enlace && new URL(enlace.href).searchParams.get('puesto');
+                    if (!puesto || !(puesto in plazas)) return;
+
+                    const cantidad = Number(plazas[puesto]);
+                    const etiqueta = document.createElement('span');
+                    etiqueta.className = 'plazas' + (cantidad === 0 ? ' agotada' : '');
+                    etiqueta.textContent = cantidad === 0 ? 'Sin plazas' : cantidad + (cantidad === 1 ? ' plaza' : ' plazas');
+                    card.querySelector('.vacante-header .arrow-icon').before(etiqueta);
+
+                    if (cantidad === 0) {
+                        enlace.classList.add('deshabilitado');
+                        enlace.removeAttribute('href');
+                        enlace.setAttribute('aria-disabled', 'true');
+                        enlace.textContent = 'Sin plazas disponibles por ahora';
+                    }
+                });
+            })
+            .catch(() => {});
     </script>
 </body>
 </html>

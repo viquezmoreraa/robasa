@@ -13,7 +13,7 @@ class AsignacionPrueba extends Model
 
     protected $fillable = [
         'postulacion_id', 'prueba_id', 'intento', 'asignada_por', 'fecha_asignacion',
-        'fecha_fin', 'estado',
+        'fecha_fin', 'estado', 'archivo_path', 'respuesta_texto',
     ];
 
     protected function casts(): array

@@ -18,6 +18,10 @@
         .estado-postulacion { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px; padding: 14px 18px; }
         .estado-postulacion .titulo { color: #9fb3d1; font-size: .9rem; }
         .estado-postulacion .desc { color: #c9d6ea; font-size: .88rem; }
+        .mensaje-video { margin: -6px 0 12px; font-size: .85rem; }
+        .mensaje-video:empty { display: none; }
+        .mensaje-video[data-estado="error"] { color: #ff9b8f; }
+        .mensaje-video[data-estado="ok"] { color: #5fe39a; }
     </style>
 @endpush
 
@@ -50,6 +54,14 @@
 
                     @if ($t->completada())
                         <span class="badge badge-ok">Entregada el {{ $t->fecha_fin?->format('d/m/Y H:i') }}</span>
+                    @elseif ($t->prueba->esVideo())
+                        <form method="POST" action="{{ route('postulante.video', $t) }}" enctype="multipart/form-data" data-video-max-segundos="120">
+                            @csrf
+                            <label for="video-{{ $t->id }}">Video (máx. 2 minutos y 35 MB)</label>
+                            <input id="video-{{ $t->id }}" type="file" name="video" accept="video/*" capture="user" required>
+                            <p class="mensaje-video" aria-live="polite"></p>
+                            <button class="btn" type="submit">Subir video</button>
+                        </form>
                     @elseif ($t->prueba->tienePreguntas())
                         <a class="btn" href="{{ route('postulante.prueba.show', $t) }}">
                             {{ $t->estado === 'EN_CURSO' ? 'Continuar prueba' : 'Responder prueba' }}
@@ -95,5 +107,46 @@
             document.querySelectorAll('.tab').forEach(b => b.classList.toggle('activa', b === btn));
             document.querySelectorAll('.panel').forEach(p => p.hidden = p.id !== 'panel-' + btn.dataset.tab);
         }));
+
+        // Video de experiencia: se lee la duración en el navegador y se bloquea el envío si pasa del máximo
+        document.querySelectorAll('form[data-video-max-segundos]').forEach(form => {
+            const input = form.querySelector('input[type="file"]');
+            const mensaje = form.querySelector('.mensaje-video');
+            const boton = form.querySelector('button[type="submit"]');
+            const maxSegundos = Number(form.dataset.videoMaxSegundos);
+            const maxBytes = 35 * 1024 * 1024;
+
+            const avisar = (texto, error) => {
+                mensaje.textContent = texto;
+                mensaje.dataset.estado = error ? 'error' : 'ok';
+                input.setCustomValidity(error ? texto : '');
+            };
+
+            input.addEventListener('change', () => {
+                const archivo = input.files[0];
+                avisar('', false);
+                if (!archivo) return;
+                if (archivo.size > maxBytes) return avisar('El video pesa más de 35 MB. Grábelo en menor calidad o más corto.', true);
+
+                const video = document.createElement('video');
+                video.preload = 'metadata';
+                video.onloadedmetadata = () => {
+                    URL.revokeObjectURL(video.src);
+                    const segundos = Math.round(video.duration);
+                    if (!isFinite(video.duration)) return;
+                    if (segundos > maxSegundos) {
+                        avisar(`El video dura ${Math.floor(segundos / 60)}:${String(segundos % 60).padStart(2, '0')} min. El máximo es 2:00 min.`, true);
+                    } else {
+                        avisar(`Duración: ${Math.floor(segundos / 60)}:${String(segundos % 60).padStart(2, '0')} min ✓`, false);
+                    }
+                };
+                video.src = URL.createObjectURL(archivo);
+            });
+
+            form.addEventListener('submit', () => {
+                boton.disabled = true;
+                boton.textContent = 'Subiendo video…';
+            });
+        });
     </script>
 @endpush

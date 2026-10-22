@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Models\Vacante;
 use App\Rules\CorreoProveedorPermitido;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rules\Password;
@@ -22,7 +23,11 @@ class RegistroRequest extends FormRequest
             'password'     => ['required', 'confirmed', Password::min(8)->letters()->numbers()],
 
             // Pasos anteriores del formulario (llegan como campos ocultos)
-            'puesto'               => 'nullable|string|max:60',
+            'puesto'               => ['nullable', 'string', 'max:60', function ($atributo, $valor, $falla) {
+                if (Vacante::sinPlazas($valor)) {
+                    $falla('Esta vacante ya no tiene plazas disponibles. Revise las demás vacantes.');
+                }
+            }],
             'nombre'               => 'nullable|string|max:150',
             // Misma regla que datos-personales.html: nacional de 9 dígitos (con o sin guiones) o DIMEX de 11-12
             'cedula'               => ['nullable', 'string', 'regex:/^([1-9]-?\d{4}-?\d{4}|\d{11,12})$/'],
