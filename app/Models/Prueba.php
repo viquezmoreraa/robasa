@@ -23,7 +23,7 @@ class Prueba extends Model
      * true si la prueba ya tiene preguntas/opciones digitalizadas en la
      * base de datos (p. ej. Keirsey, BARSIT, E.D.) y por tanto puede
      * responderse en línea a través de MotorPsicometrico; false si solo
-     * se completa subiendo un archivo (p. ej. CONOCIMIENTOS, CASO_PRACTICO).
+     * se completa subiendo un archivo (p. ej. VIDEO_EXPERIENCIA).
      * No se guarda como columna aparte: se deriva de los datos, como el
      * resto del motor.
      */
